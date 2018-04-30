@@ -20,7 +20,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="#">Home</a></li>
-        <li><a href="#">Videos</a></li>
+        <li><a href="#">Videos <span class="glyphicon glyphicon-film"></span></a></li>
         <form class="navbar-form navbar-left" action="/action_page.php">
 		  <div class="input-group">
 		    <input type="text" class="form-control" placeholder="Search">

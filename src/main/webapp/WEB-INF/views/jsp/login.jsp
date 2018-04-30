@@ -10,27 +10,37 @@
 </head>
 <body>
 
- <c:import url="navbar.jsp"></c:import>
+<c:import url="navbar.jsp"></c:import>
 
-	<div align="center">
-		<h4 style="color: red">${error}</h4>
-			<h1>Login</h1>
-			<form action="login" method="post">
-				<table>
-				<tr>
-					<td><i>Username</i></td>
-					<td><input type="text" name="username"/></td>
-				</tr>
-				<tr>
-					<td><i>Password</i></td>
-					<td><input type="password" name="password"/></td>
-				</tr>
-				<tr>
-					<td><input type="submit" value="Login"></td>
-				</tr>
-			</table>
-			Don't have an account? <a href="showRegister"> Register here</a>
-			</form>
-		</div>
+<div class="container-fluid text-center">    
+  <div class="row content">
+  <c:import url="left-sidebar.jsp"></c:import>
+    <div class="col-sm-8 text-center"> 
+      <h4 style="color: red">${error}</h4>
+		<h1>Login</h1>
+		<form action="login" method="post">
+			<table align="center">
+			<tr>
+				<td><i>Username </i></td>
+				<td><input type="text" name="username"/></td>
+			</tr>
+			<tr>
+				<td><i>Password </i></td>
+				<td><input type="password" name="password"/></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Login"></td>
+			</tr>
+		</table>
+		Don't have an account? <a href="showRegister"> Register here</a>
+		</form>
+    </div>
+  <c:import url="right-sidebar.jsp"></c:import>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>Footer Text</p>
+</footer>
 </body>
 </html>

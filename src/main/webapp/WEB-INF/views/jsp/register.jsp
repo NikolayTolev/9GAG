@@ -9,66 +9,78 @@
 <title>Register</title>
 </head>
 <body>
- <c:import url="navbar.jsp"></c:import>
-	<div align="center">
-		<h4 style="color: red">${error}</h4>
-			<h1>Register</h1>
-			<form action="register" method="post">
-				<table>
-				<tr>
-					<td>
-						<i>First name</i>
-					</td>
-					<td>
-						<input type="text" name="firstName" required/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<i>Last name</i>
-					</td>
-					<td>
-						<input type="text" name="lastName" required/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<i>Username</i>
-					</td>
-					<td>
-						<input type="text" name="username" required/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<i>Password</i>
-					</td>
-					<td>
-						<input type="password" name="password" required/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<i>Confirm password</i>
-					</td>
-					<td>
-						<input type="password" name="password2" required/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<i>Email</i>
-					</td>
-					<td>
-						<input type="email" name="email" required/>
-					</td>
-				</tr>
-				<tr>
-					<td><input type="submit" value="Register"></td>
-				</tr>
-			</table>
-			Already have an account?<a href="showlogin"> Login here</a>
-			</form>
-		</div>
+
+<c:import url="navbar.jsp"></c:import>
+
+<div class="container-fluid text-center">    
+  <div class="row content">
+  <c:import url="left-sidebar.jsp"></c:import>
+    <div class="col-sm-8 text-center"> 
+      <h4 style="color: red">${error}</h4>
+		<h1>Register</h1>
+		<form action="register" method="post">
+			<table align="center">
+			<tr>
+				<td>
+					<i>First name</i>
+				</td>
+				<td>
+					<input type="text" name="firstName" required/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<i>Last name</i>
+				</td>
+				<td>
+					<input type="text" name="lastName" required/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<i>Username</i>
+				</td>
+				<td>
+					<input type="text" name="username" required/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<i>Password</i>
+				</td>
+				<td>
+					<input type="password" name="password" required/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<i>Confirm password</i>
+				</td>
+				<td>
+					<input type="password" name="password2" required/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<i>Email</i>
+				</td>
+				<td>
+					<input type="email" name="email" required/>
+				</td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Register"></td>
+			</tr>
+		</table>
+		Already have an account?<a href="showlogin"> Login here</a>
+		</form>
+    </div>
+  <c:import url="right-sidebar.jsp"></c:import>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>Footer Text</p>
+</footer>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.gag.controller.manager;
 
 import com.gag.model.Comment;
 import com.gag.model.Post;
+import com.gag.model.User;
 import com.gag.model.dao.CommentDAO;
 
 public enum CommentManager {
@@ -20,12 +21,16 @@ public enum CommentManager {
 	
 	public void removeComment(Comment c) throws Exception {
 		if (c == null) {
-			throw new Exception("Invalid comment id");
+			throw new Exception("No comment was chosen");
 		}
 		CommentDAO.COMMENT_DAO.deleteComment(c);
 	}
 	
-	public void chandeComment(Comment c) {
+	public void voteComment(Comment comment, User user) {
+		
+	}
+	
+	public void changeComment(Comment c) {
 		//TODO
 	}
 }

@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.gag.model.Comment;
 import com.gag.model.Post;
+import com.gag.model.User;
 import com.gag.model.db.DBManager;
 
 public enum CommentDAO implements ICommentDAO {
@@ -56,4 +58,23 @@ public enum CommentDAO implements ICommentDAO {
 		ps.setInt(4, parent.getId());
 		ps.executeUpdate();
 	}
+
+	@Override
+	public void voteComment(User user, Comment comment, int voteType) throws Exception {
+		String sql = "INSERT INTO comments_have_votes (vote, comments_is, users_id) VALUES (?, ?, ?)";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, voteType);
+		ps.setInt(2, comment.getId());
+		ps.setInt(3, user.getId());
+		ps.executeUpdate();
+	}
+
+	@Override
+	public List<Comment> getCommentsByPost(Post post) throws Exception {
+		String sql = "";
+	}
+
+	
+	
+	
 }
