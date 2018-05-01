@@ -59,6 +59,10 @@ public class User {
 		return firstName;
 	}
 
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
 	public String getLastName() {
 		return lastName;
 	}
@@ -67,6 +71,10 @@ public class User {
 		return username;
 	}
 
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
 	public String getPassword() {
 		return password;
 	}

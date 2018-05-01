@@ -1,6 +1,7 @@
 package com.gag.controller;
 
 import java.sql.SQLException;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.gag.controller.manager.UserManager;
 import com.gag.model.User;
+import com.gag.model.dao.UserDAO;
 import com.gag.util.exceptions.RegisterException;
 
 
@@ -35,13 +37,19 @@ public class UserController {
 		return "login";
 	}
 	
+	@RequestMapping(value="/showSettings", method = RequestMethod.GET)
+	public String showSettings() {
+		// return settings page
+		return "settings";
+	}
+	
 	@RequestMapping(value="/login", method= RequestMethod.POST)
 	public String login(Model model, HttpServletRequest request, HttpSession session) {
 		try {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-			UserManager.USER_MANAGER.loginUser(username, password);
-			session.setAttribute("username", username);
+			User user = UserManager.USER_MANAGER.loginUser(username, password);
+			session.setAttribute("user", user);
 			return "index";
 		} catch (Exception e) {
 			model.addAttribute("error", e.getMessage());
@@ -68,11 +76,39 @@ public class UserController {
 									request.getParameter("username"), request.getParameter("password"), 
 									request.getParameter("email"));
 			UserManager.USER_MANAGER.registerUser(user);
-			session.setAttribute("username", user.getUsername());
+			session.setAttribute("user", user);
 			return "index";
 		} catch (RegisterException | SQLException e) {
 			model.addAttribute("error", e.getMessage());
 			return "register";
+		}
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String changeUserData(Model model, HttpSession session, HttpServletRequest request) {
+		try {
+			String firstName = request.getParameter("firstName");
+			String lastName = request.getParameter("lastName");
+			User user = (User) session.getAttribute("user");
+			UserManager.USER_MANAGER.changeProfile(user, firstName, lastName);
+			model.addAttribute("success", "Data changed successfuly.");
+			return "settings";
+		} catch (Exception e) {
+			model.addAttribute("error", e.getMessage());
+			return "settings";
+		}
+	}
+	
+	@RequestMapping(value = "/deleteAccount", method = RequestMethod.POST)
+	public String deleteAccount(HttpSession session, Model model) {
+		try {
+			User user = (User) session.getAttribute("user");
+			UserManager.USER_MANAGER.deleteAccount(user);
+			session.invalidate();
+			return "index";
+		} catch (Exception e) {
+			model.addAttribute("error", e.getMessage());
+			return "login";
 		}
 	}
 }

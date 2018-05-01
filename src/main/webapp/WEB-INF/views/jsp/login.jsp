@@ -16,23 +16,23 @@
   <div class="row content">
   <c:import url="left-sidebar.jsp"></c:import>
     <div class="col-sm-8 text-center"> 
-      <h4 style="color: red">${error}</h4>
+      <h5 style="color: red"><i>${error}</i></h5>
 		<h1>Login</h1>
 		<form action="login" method="post">
 			<table align="center">
 			<tr>
-				<td><i>Username </i></td>
+				<td><i>Username&nbsp;</i></td>
 				<td><input type="text" name="username"/></td>
 			</tr>
 			<tr>
-				<td><i>Password </i></td>
+				<td><i>Password&nbsp;</i></td>
 				<td><input type="password" name="password"/></td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="Login"></td>
 			</tr>
 		</table>
-		Don't have an account? <a href="showRegister"> Register here</a>
+		Don't have an account? <a href="showRegister">&nbsp;Register here</a>
 		</form>
     </div>
   <c:import url="right-sidebar.jsp"></c:import>

@@ -43,14 +43,38 @@ public enum UserManager {
 		UserDAO.USER_DAO.saveUser(u);
 	}
 
-	public void loginUser(String username, String password) throws Exception {
+	public User loginUser(String username, String password) throws Exception {
 		User u = UserDAO.USER_DAO.getUserByUsername(username);
 		if (username == null || password == null || u==null || !(u.getUsername().equals(username))
 				|| !(BCrypt.checkpw(password, u.getPassword()))) {
 			throw new Exception("Invalid username/password");
 		}
+		return u;
 	}
 
+	public void changeProfile(User user, String firstName, String lastName) throws Exception {
+		if (firstName == null || firstName.trim().isEmpty()) {
+			throw new Exception("The field for first name can not be empty.");
+		}
+		if (lastName == null || lastName.trim().isEmpty()) {
+			throw new Exception("The field for last name can not be empty.");
+		}
+		if (user.getFirstName().equals(firstName) && user.getLastName().equals(lastName)) {
+			throw new Exception("Nothing was changed.");
+		}
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		System.out.println(user.toString());
+		UserDAO.USER_DAO.updateUserData(user);
+	}
+	
+	public void deleteAccount(User user) throws Exception {
+		if (user == null) {
+			throw new Exception("Not logged in.");
+		}
+		UserDAO.USER_DAO.deleteUser(user);
+	}
+	
 	private boolean emailValidator(String email) {
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 				Pattern.CASE_INSENSITIVE);
