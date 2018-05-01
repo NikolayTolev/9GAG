@@ -26,11 +26,10 @@ public enum CommentManager {
 		CommentDAO.COMMENT_DAO.deleteComment(c);
 	}
 	
-	public void voteComment(Comment comment, User user) {
-		
-	}
-	
-	public void changeComment(Comment c) {
-		//TODO
+	public void changeComment(Comment c) throws Exception {
+		if (c == null || c.getContent().trim().isEmpty()) {
+			throw new Exception("No changes were made");
+		}
+		CommentDAO.COMMENT_DAO.updateComment(c);
 	}
 }

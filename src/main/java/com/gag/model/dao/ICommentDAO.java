@@ -1,5 +1,7 @@
 package com.gag.model.dao;
 
+import java.util.List;
+
 import com.gag.model.Comment;
 import com.gag.model.Post;
 import com.gag.model.User;
@@ -12,5 +14,5 @@ public interface ICommentDAO {
     void deleteComment(Comment c) throws Exception;
     void saveSubComment(Comment parent, Comment child) throws Exception;
     void voteComment(User user, Comment comment, int voteType) throws Exception;
-    // void updateComment(Comment c) throws Exception;
+    void updateComment(Comment c) throws Exception;
 }
