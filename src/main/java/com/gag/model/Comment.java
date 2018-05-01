@@ -42,6 +42,10 @@ public class Comment {
 		return content;
 	}
 	
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
 	public void addReply(Comment c) {
 		this.replies.add(c);
 	}

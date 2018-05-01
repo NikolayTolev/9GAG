@@ -32,6 +32,9 @@ public enum UserManager {
 		if (u.getLastName() == null) {
 			throw new RegisterException("enter last name");
 		}
+		if (u.getGenderId() < 1) {
+			throw new RegisterException("gender not added");
+		}
 		if (!emailValidator(u.getEmail())) {
 			throw new RegisterException("inalid email");
 		}
@@ -52,19 +55,19 @@ public enum UserManager {
 		return u;
 	}
 
-	public void changeProfile(User user, String firstName, String lastName) throws Exception {
+	public void changeProfile(User user, String firstName, String lastName, int genderId) throws Exception {
 		if (firstName == null || firstName.trim().isEmpty()) {
 			throw new Exception("The field for first name can not be empty.");
 		}
 		if (lastName == null || lastName.trim().isEmpty()) {
 			throw new Exception("The field for last name can not be empty.");
 		}
-		if (user.getFirstName().equals(firstName) && user.getLastName().equals(lastName)) {
+		if (user.getFirstName().equals(firstName) && user.getLastName().equals(lastName) && (user.getGenderId() == genderId)) {
 			throw new Exception("Nothing was changed.");
 		}
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		System.out.println(user.toString());
+		user.setGenderId(genderId);
 		UserDAO.USER_DAO.updateUserData(user);
 	}
 	

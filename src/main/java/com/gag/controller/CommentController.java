@@ -64,5 +64,17 @@ public class CommentController {
 		}
 	}
 	
-	
+	@RequestMapping(value = "/changeComment", method = RequestMethod.POST)
+	public String changeComment(Model model, HttpServletRequest request) {
+		try {
+			Comment com = (Comment) request.getAttribute("comment");
+			String content = request.getParameter("content");
+			com.setContent(content);
+			CommentManager.COMMENT_MANAGER.changeComment(com);
+			return "index";
+		} catch (Exception e) {
+			model.addAttribute("error", e.getMessage());
+			return "index";
+		}
+	}
 }

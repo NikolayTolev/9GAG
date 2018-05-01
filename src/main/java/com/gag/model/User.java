@@ -12,22 +12,24 @@ public class User {
 	private String username;
 	private String password;
 	private String email;
+	private int genderId;
 	private String country;
 	private String biography;
 	private String photo;
 	private List<Post> posts;
 	
-	public User(String firstName, String lastName, String username, String password, String email) {
+	public User(String firstName, String lastName, String username, String password, String email, int gender) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.genderId = gender;
 		this.posts=new ArrayList<>();
 	}
 
-	public User(int id, String firstName, String lastName, String username, String password, String email) {
-		this(firstName, lastName, username, password, email);
+	public User(int id, String firstName, String lastName, String username, String password, String email, int gender) {
+		this(firstName, lastName, username, password, email, gender);
 		this.id = id;
 	}
 
@@ -83,6 +85,14 @@ public class User {
 		return email;
 	}
 
+	public int getGenderId() {
+		return genderId;
+	}
+	
+	public void setGenderId(int genderId) {
+		this.genderId = genderId;
+	}
+	
 	public String getCountry() {
 		return country;
 	}

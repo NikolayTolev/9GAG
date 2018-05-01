@@ -20,13 +20,14 @@ public enum UserDAO implements IUserDAO {
 
 	@Override
 	public void saveUser(User u) throws SQLException {
-		String sql = "INSERT INTO users (email, password, username, first_name, last_name) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO users (email, password, username, first_name, last_name, genders_id) VALUES (?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, u.getEmail());
 		ps.setString(2, BCrypt.hashpw(u.getPassword(), BCrypt.gensalt()));
 		ps.setString(3, u.getUsername());
 		ps.setString(4, u.getFirstName());
 		ps.setString(5, u.getLastName());
+		ps.setInt(6, u.getGenderId());
 		ps.executeUpdate();
 	}
 
@@ -48,21 +49,21 @@ public enum UserDAO implements IUserDAO {
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
 			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), 
-							rs.getString("username"), rs.getString("password"), rs.getString("email"));
+							rs.getString("username"), rs.getString("password"), rs.getString("email"), rs.getInt("genders_id"));
 		}
 		return null;
 	}
 
 	@Override
 	public User getUserByUsername(String username) throws SQLException {
-		String sql = "SELECT id, email, password, username, first_name, last_name, photo, biography, country FROM users"
+		String sql = "SELECT id, email, password, username, first_name, last_name, photo, biography, country, genders_id FROM users"
 				+ " WHERE username=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, username);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
 			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), 
-							rs.getString("username"), rs.getString("password"), rs.getString("email"));
+							rs.getString("username"), rs.getString("password"), rs.getString("email"), rs.getInt("genders_id"));
 		}
 		return null;
 	}
@@ -93,11 +94,12 @@ public enum UserDAO implements IUserDAO {
 
 	@Override
 	public void updateUserData(User u) throws Exception {
-		String sql = "UPDATE users SET first_name=?, last_name=? WHERE id=?";
+		String sql = "UPDATE users SET first_name=?, last_name=?, genders_id=? WHERE id=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, u.getFirstName());
 		ps.setString(2, u.getLastName());
-		ps.setInt(3, u.getId());
+		ps.setInt(3, u.getGenderId());
+		ps.setInt(4, u.getId());
 		ps.executeUpdate();
 	}
 }
