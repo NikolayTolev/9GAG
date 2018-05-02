@@ -13,7 +13,7 @@ public class User {
 	private String password;
 	private String email;
 	private int genderId;
-	private String country;
+	private int countryId;
 	private String biography;
 	private String photo;
 	private List<Post> posts;
@@ -28,9 +28,11 @@ public class User {
 		this.posts=new ArrayList<>();
 	}
 
-	public User(int id, String firstName, String lastName, String username, String password, String email, int gender) {
+	public User(int id, String firstName, String lastName, String username, String password, String email,String biography, int gender, int country) {
 		this(firstName, lastName, username, password, email, gender);
 		this.id = id;
+		this.biography = biography;
+		this.countryId = country;
 	}
 
 	public int getId() {
@@ -93,14 +95,14 @@ public class User {
 		this.genderId = genderId;
 	}
 	
-	public String getCountry() {
-		return country;
+	public int getCountryId() {
+		return countryId;
 	}
-	
-	public void setCountry(String country) {
-		this.country=country;
+
+	public void setCountryId(int countryId) {
+		this.countryId = countryId;
 	}
-	
+
 	public void deletePost(Post p) {
 		posts.remove(p);
 	}

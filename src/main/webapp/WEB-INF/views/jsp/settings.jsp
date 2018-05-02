@@ -27,32 +27,33 @@
 					<table align="center">
 						<tr>
 							<td><i>First&nbsp;name&nbsp;</i></td>
-							<td><input type="text" name="firstName" style="width: 360px" 
+							<td><input type="text" name="firstName" style="width: 380px" 
 								value="${sessionScope.user.firstName}" /></td>
 						</tr>
 						<tr>
 							<td><i>Last&nbsp;name&nbsp;</i></td>
-							<td><input type="text" name="lastName" style="width: 360px" 
+							<td><input type="text" name="lastName" style="width: 380px" 
 								value="${sessionScope.user.lastName}" /></td>
 						</tr>
 						<tr>
 							<td>Gender&nbsp;</td>
-							<td><select style="width: 360px; height: 30px" name="gender">
-									<c:forEach var="gender" items="${genders}">
+							<td><select style="width: 380px; height: 30px" name="gender">
+									<c:forEach var="gender" items="${sessionScope.genders}">
 										<option value="${gender.id}">${gender.type}</option>
 									</c:forEach>
 							</select></td>
 						</tr>
 						<tr>
 							<td><i>Country&nbsp;</i></td>
-							<td><select name="country" style="width: 360px; height: 30px">
-									<option>Bulgaria</option>
-									<option>England</option>
+							<td><select style="width: 380px; height: 30px" name="country">
+									<c:forEach var="country" items="${sessionScope.countries}">
+										<option value="${country.id}">${country.name}</option>
+									</c:forEach>
 							</select></td>
 						</tr>
 						<tr>
 							<td><i>Biography&nbsp;</i></td>
-							<td><textarea name="biography" style="width: 360px">${sessionScope.user.biography}</textarea></td>
+							<td><textarea name="biography" rows="4" cols="50" style="resize: none;">${sessionScope.user.biography}</textarea></td>
 						</tr>
 						<tr>
 							<td><input type="submit" align="middle"
@@ -60,7 +61,7 @@
 						</tr>
 					</table>
 				</form>
-				<form onclick="location.href='deleteAccount'" method="post">
+				<form action="deleteAccount" method="post">
 					<input type="button" value="Delete account" />
 				</form>
 			</div>

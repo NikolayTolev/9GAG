@@ -48,22 +48,24 @@ public enum UserDAO implements IUserDAO {
 		ps.setInt(1, id);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
-			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), 
-							rs.getString("username"), rs.getString("password"), rs.getString("email"), rs.getInt("genders_id"));
+			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"),
+					rs.getString("username"), rs.getString("password"), rs.getString("email"), rs.getString("biography"),
+					rs.getInt("genders_id"), rs.getInt("countries_id"));
 		}
 		return null;
 	}
 
 	@Override
 	public User getUserByUsername(String username) throws SQLException {
-		String sql = "SELECT id, email, password, username, first_name, last_name, photo, biography, country, genders_id FROM users"
+		String sql = "SELECT id, email, password, username, first_name, last_name, photo, biography, genders_id, countries_id FROM users"
 				+ " WHERE username=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, username);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
-			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), 
-							rs.getString("username"), rs.getString("password"), rs.getString("email"), rs.getInt("genders_id"));
+			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"),
+					rs.getString("username"), rs.getString("password"), rs.getString("email"),
+					rs.getString("biography"), rs.getInt("genders_id"), rs.getInt("countries_id"));
 		}
 		return null;
 	}
@@ -94,13 +96,14 @@ public enum UserDAO implements IUserDAO {
 
 	@Override
 	public void updateUserData(User u) throws Exception {
-		String sql = "UPDATE users SET first_name=?, last_name=?, biography, genders_id=? WHERE id=?";
+		String sql = "UPDATE users SET first_name=?, last_name=?, biography=?, genders_id=?, countries_id=? WHERE id=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, u.getFirstName());
 		ps.setString(2, u.getLastName());
 		ps.setString(3, u.getBiography());
 		ps.setInt(4, u.getGenderId());
-		ps.setInt(5, u.getId());
+		ps.setInt(5, u.getCountryId());
+		ps.setInt(6, u.getId());
 		ps.executeUpdate();
 	}
 }
