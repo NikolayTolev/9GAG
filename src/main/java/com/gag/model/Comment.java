@@ -1,6 +1,7 @@
 package com.gag.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -46,6 +47,14 @@ public class Comment {
 		this.content = content;
 	}
 	
+	public List<Comment> getReplies() {
+		return Collections.unmodifiableList(replies);
+	}
+	
+	public void setReplies(List<Comment> replies) {
+		this.replies = replies;
+	}
+	
 	public void addReply(Comment c) {
 		this.replies.add(c);
 	}
@@ -61,6 +70,5 @@ public class Comment {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
 	
 }

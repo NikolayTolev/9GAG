@@ -85,6 +85,7 @@ public enum CommentDAO implements ICommentDAO {
 			Comment com = new Comment(rs.getInt("id"), rs.getDate("date"), PostDAO.POST_DAO.getPostsById(rs.getInt("posts_id")),
 					UserDAO.USER_DAO.getUserById(rs.getInt("users_id")), rs.getString("content"));
 			comments.add(com);
+			com.setReplies(getCommentsByComment(com));
 		}
 		return comments;
 	}
@@ -96,5 +97,42 @@ public enum CommentDAO implements ICommentDAO {
 		ps.setString(1, c.getContent());
 		ps.setInt(2, c.getId());
 		ps.executeUpdate();
+	}
+
+	@Override
+	public List<Comment> getCommentsByComment(Comment comment) throws Exception {
+		String sql = "SELECT c.id, c.date, c.content, c.users_id, c.posts_id, c.comments_id FROM comments c"
+					 + "JOIN comments p ON (c.comments_id = p.id) WHERE p.id = ?;";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, comment.getId());
+		ResultSet rs = ps.executeQuery();
+		List<Comment> comments = new ArrayList<>();
+		while(rs.next()) {
+			comments.add(new Comment(rs.getInt("id"), rs.getDate("date"), PostDAO.POST_DAO.getPostsById(rs.getInt("posts_id")), 
+					               	UserDAO.USER_DAO.getUserById(rs.getInt("users_id")), rs.getString("content")));
+		}
+		return comments;
+	}
+
+	@Override
+	public void deleteCommentVote(User user, Comment comment) throws Exception {
+		String sql = "DELETE FROM comments_have_votes WHERE comments_id = ? AND users_id = ?;";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, comment.getId());
+		ps.setInt(2, user.getId());
+		ps.executeUpdate();
+	}
+
+	@Override
+	public int countVotesOfComment(Comment comment) throws Exception {
+		String sql = "SELECT SUM(vote) AS vote FROM comments_have_votes WHERE comments_id = ?;";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, comment.getId());
+		ResultSet rs = ps.executeQuery();
+		int result = 0;
+		if (rs.next()) {
+			result = rs.getInt("vote");
+		}
+		return result;
 	}
 }
