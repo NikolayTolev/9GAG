@@ -15,14 +15,14 @@ import com.gag.controller.manager.UserManager;
 import com.gag.model.Gender;
 import com.gag.model.User;
 import com.gag.model.dao.GenderDAO;
-import com.gag.model.dao.UserDAO;
 import com.gag.util.exceptions.RegisterException;
-
 
 
 @Controller
 public class UserController {
 
+	
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showMain() {
 		return "index";
@@ -41,8 +41,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/showSettings", method = RequestMethod.GET)
-	public String showSettings(Model model) {
+	public String showSettings(Model model, HttpSession session) {
 		try {
+			if (session.getAttribute("user") == null) {
+				model.addAttribute("error", "We don't know who you are. Please, login first.");
+				return "login";
+			}
 			List<Gender> genders = GenderDAO.GENDER_DAO.getAllGenders();
 			model.addAttribute("genders", genders);
 			// return settings page
@@ -61,6 +65,7 @@ public class UserController {
 			String password = request.getParameter("password");
 			User user = UserManager.USER_MANAGER.loginUser(username, password);
 			session.setAttribute("user", user);
+			session.setMaxInactiveInterval(5);
 			return "index";
 		} catch (Exception e) {
 			model.addAttribute("error", e.getMessage());
@@ -98,6 +103,7 @@ public class UserController {
 				UserManager.USER_MANAGER.registerUser(user);
 			}
 			session.setAttribute("user", user);
+			session.setMaxInactiveInterval(5);
 			return "index";
 		} catch (RegisterException | SQLException e) {
 			model.addAttribute("error", e.getMessage());
@@ -108,11 +114,17 @@ public class UserController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String changeUserData(Model model, HttpSession session, HttpServletRequest request) {
 		try {
+			if (session.getAttribute("user") == null) {
+				model.addAttribute("error", "We don't know who you are. Please, login first.");
+				return "login";
+			}
 			String firstName = request.getParameter("firstName");
 			String lastName = request.getParameter("lastName");
+			String biography = request.getParameter("biography");
 			int genderId = Integer.parseInt(request.getParameter("gender"));
+			
 			User user = (User) session.getAttribute("user");
-			UserManager.USER_MANAGER.changeProfile(user, firstName, lastName, genderId);
+			UserManager.USER_MANAGER.changeProfile(user, firstName, lastName, biography, genderId);
 			model.addAttribute("success", "Data changed successfuly.");
 			return "settings";
 		} catch (Exception e) {
@@ -120,10 +132,14 @@ public class UserController {
 			return "settings";
 		}
 	}
-	
+
 	@RequestMapping(value = "/deleteAccount", method = RequestMethod.POST)
 	public String deleteAccount(HttpSession session, Model model) {
 		try {
+			if (session.getAttribute("user") == null) {
+				model.addAttribute("error", "We don't know who you are. Please, login first.");
+				return "login";
+			}
 			User user = (User) session.getAttribute("user");
 			UserManager.USER_MANAGER.deleteAccount(user);
 			session.invalidate();

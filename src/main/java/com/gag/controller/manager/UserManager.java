@@ -55,19 +55,21 @@ public enum UserManager {
 		return u;
 	}
 
-	public void changeProfile(User user, String firstName, String lastName, int genderId) throws Exception {
+	public void changeProfile(User user, String firstName, String lastName, String biography, int genderId) throws Exception {
 		if (firstName == null || firstName.trim().isEmpty()) {
 			throw new Exception("The field for first name can not be empty.");
 		}
 		if (lastName == null || lastName.trim().isEmpty()) {
 			throw new Exception("The field for last name can not be empty.");
 		}
-		if (user.getFirstName().equals(firstName) && user.getLastName().equals(lastName) && (user.getGenderId() == genderId)) {
+		if (user.getFirstName().equals(firstName) && user.getLastName().equals(lastName) && (user.getGenderId() == genderId) 
+				&& user.getBiography().equals(biography)) {
 			throw new Exception("Nothing was changed.");
 		}
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setGenderId(genderId);
+		user.setBiography(biography);
 		UserDAO.USER_DAO.updateUserData(user);
 	}
 	

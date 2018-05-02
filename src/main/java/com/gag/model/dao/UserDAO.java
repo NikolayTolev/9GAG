@@ -94,12 +94,13 @@ public enum UserDAO implements IUserDAO {
 
 	@Override
 	public void updateUserData(User u) throws Exception {
-		String sql = "UPDATE users SET first_name=?, last_name=?, genders_id=? WHERE id=?";
+		String sql = "UPDATE users SET first_name=?, last_name=?, biography, genders_id=? WHERE id=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, u.getFirstName());
 		ps.setString(2, u.getLastName());
-		ps.setInt(3, u.getGenderId());
-		ps.setInt(4, u.getId());
+		ps.setString(3, u.getBiography());
+		ps.setInt(4, u.getGenderId());
+		ps.setInt(5, u.getId());
 		ps.executeUpdate();
 	}
 }

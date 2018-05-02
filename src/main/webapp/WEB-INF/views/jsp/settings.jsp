@@ -27,17 +27,17 @@
 					<table align="center">
 						<tr>
 							<td><i>First&nbsp;name&nbsp;</i></td>
-							<td><input type="text" name="firstName"
+							<td><input type="text" name="firstName" style="width: 360px" 
 								value="${sessionScope.user.firstName}" /></td>
 						</tr>
 						<tr>
 							<td><i>Last&nbsp;name&nbsp;</i></td>
-							<td><input type="text" name="lastName"
+							<td><input type="text" name="lastName" style="width: 360px" 
 								value="${sessionScope.user.lastName}" /></td>
 						</tr>
 						<tr>
 							<td>Gender&nbsp;</td>
-							<td><select style="width: 179px; height: 30px" name="gender">
+							<td><select style="width: 360px; height: 30px" name="gender">
 									<c:forEach var="gender" items="${genders}">
 										<option value="${gender.id}">${gender.type}</option>
 									</c:forEach>
@@ -45,14 +45,14 @@
 						</tr>
 						<tr>
 							<td><i>Country&nbsp;</i></td>
-							<td><select name="country" style="width: 179px; height: 30px">
+							<td><select name="country" style="width: 360px; height: 30px">
 									<option>Bulgaria</option>
 									<option>England</option>
 							</select></td>
 						</tr>
 						<tr>
 							<td><i>Biography&nbsp;</i></td>
-							<td><textarea name="biography"></textarea></td>
+							<td><textarea name="biography" style="width: 360px">${sessionScope.user.biography}</textarea></td>
 						</tr>
 						<tr>
 							<td><input type="submit" align="middle"

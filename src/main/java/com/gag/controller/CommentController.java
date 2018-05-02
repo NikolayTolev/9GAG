@@ -21,9 +21,13 @@ import com.gag.model.dao.UserDAO;
 @Controller
 public class CommentController {
 
-	@RequestMapping(value = "/comment", method = RequestMethod.POST)
-	public String comment(Model model, HttpServletRequest req) {
+	@RequestMapping(value = "/addComment", method = RequestMethod.POST)
+	public String comment(Model model, HttpServletRequest req, HttpSession session) {
 		try {
+			if (session.getAttribute("user") == null) {
+				model.addAttribute("error", "We don't know who you are. Please, login first.");
+				return "login";
+			}
 			Post post = (Post) req.getAttribute("post");
 			User user = UserDAO.USER_DAO.getUserByUsername((String)req.getSession().getAttribute("username"));
 			String content = (String)req.getAttribute("content");
@@ -36,9 +40,13 @@ public class CommentController {
 		}
 	}
 	
-	@RequestMapping(value = "/comment", method = RequestMethod.DELETE)
-	public String deleteComment(Model model, HttpServletRequest req) {
+	@RequestMapping(value = "/deleteComment", method = RequestMethod.DELETE)
+	public String deleteComment(Model model, HttpServletRequest req, HttpSession session) {
 		try {
+			if (session.getAttribute("user") == null) {
+				model.addAttribute("error", "We don't know who you are. Please, login first.");
+				return "login";
+			}
 			Comment comment = (Comment) req.getAttribute("comment");
 			CommentManager.COMMENT_MANAGER.removeComment(comment);
 			return "index";
@@ -51,6 +59,10 @@ public class CommentController {
 	@RequestMapping(value = "/voteComment", method = RequestMethod.POST)
 	public String voteComment(Model model, HttpServletRequest request, HttpSession session) {
 		try {
+			if (session.getAttribute("user") == null) {
+				model.addAttribute("error", "We don't know who you are. Please, login first.");
+				return "login";
+			}
 			User user = UserDAO.USER_DAO.getUserByUsername((String) session.getAttribute("username"));
 			Comment comment = (Comment) request.getAttribute("comment");
 			CommentDAO.COMMENT_DAO.voteComment(user, comment, (int) request.getAttribute("vote"));
@@ -65,8 +77,12 @@ public class CommentController {
 	}
 	
 	@RequestMapping(value = "/changeComment", method = RequestMethod.POST)
-	public String changeComment(Model model, HttpServletRequest request) {
+	public String changeComment(Model model, HttpServletRequest request, HttpSession session) {
 		try {
+			if (session.getAttribute("user") == null) {
+				model.addAttribute("error", "We don't know who you are. Please, login first.");
+				return "login";
+			}
 			Comment com = (Comment) request.getAttribute("comment");
 			String content = request.getParameter("content");
 			com.setContent(content);
