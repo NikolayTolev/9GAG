@@ -26,7 +26,7 @@ public enum PostDAO implements IPostDAO{
 	}
 
 	@Override
-	public Collection<Post> getPostsByTag(Tag... tags) throws Exception {
+	public List<Post> getPostsByTag(Tag... tags) throws Exception {
 		List<Post> posts= new ArrayList<>();
 		StringBuilder tagSQL=new StringBuilder();
 		
@@ -55,16 +55,17 @@ public enum PostDAO implements IPostDAO{
 	}
 
 	@Override
-	public Collection<Post> getPostsBySection(Section section) throws SQLException {
+	public List<Post> getPostsBySection(int sectionId) throws SQLException {
 		List<Post> posts= new ArrayList<>();
-		String sql = "SELECT image_url, title, date, user_id FROM posts WHERE section_id=? ";
+		String sql = "SELECT id,image_url, title, date, user_id FROM posts WHERE section_id=? ";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, section.getId());
+		ps.setInt(1,sectionId);
 	    ResultSet rs = ps.executeQuery();
 	    
 	    while(rs.next()) {
 	    	User owner = UserDAO.USER_DAO.getUserById(rs.getInt("user_id"));
 		    Post p = new Post(owner)
+		    		    .id(rs.getInt("id"))
 		    		    .imageURL(rs.getString("image_url"))
 		    		    .title(rs.getString("title"))
 		    		    .date(rs.getTimestamp("date").toLocalDateTime());
@@ -75,7 +76,7 @@ public enum PostDAO implements IPostDAO{
 	}
 
 	@Override
-	public Collection<Post> getPostsByOwner(User u) throws SQLException {
+	public List<Post> getPostsByOwner(User u) throws SQLException {
 		List<Post> posts= new ArrayList<>();
 		String sql = "SELECT image_url, title, date, user_id FROM posts WHERE user_id=? ";
 		PreparedStatement ps = con.prepareStatement(sql);
@@ -95,15 +96,16 @@ public enum PostDAO implements IPostDAO{
 	}
 
 	@Override
-	public Collection<Post> getFreshPosts() throws SQLException {
+	public List<Post> getFreshPosts() throws SQLException {
 		List<Post> posts= new ArrayList<>();
-		String sql = "SELECT image_url, title, date, user_id FROM posts ORDER BY date DESC ";
+		String sql = "SELECT id,image_url, title, date, user_id FROM posts ORDER BY date DESC ";
 		Statement s = con.createStatement();
 	    ResultSet rs = s.executeQuery(sql);
 	    
 	    while(rs.next()) {
 	    	User owner = UserDAO.USER_DAO.getUserById(rs.getInt("user_id"));
 		    Post p = new Post(owner)
+		    		    .id(rs.getInt("id"))
 		    		    .imageURL(rs.getString("image_url"))
 		    		    .title(rs.getString("title"))
 		    		    .date(rs.getTimestamp("date").toLocalDateTime());
@@ -114,13 +116,13 @@ public enum PostDAO implements IPostDAO{
 	}
 
 	@Override
-	public Collection<Post> getHotPost() throws SQLException {
+	public List<Post> getHotPost() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Collection<Post> getTrendingPost() throws SQLException {
+	public List<Post> getTrendingPost() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}

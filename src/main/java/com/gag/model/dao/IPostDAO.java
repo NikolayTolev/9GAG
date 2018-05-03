@@ -11,7 +11,7 @@ public interface IPostDAO {
 
 	Post getPostsById(int id) throws Exception;
 	Collection<Post> getPostsByTag(Tag ... tags) throws Exception;
-	Collection<Post> getPostsBySection(Section section) throws Exception;
+	Collection<Post> getPostsBySection(int sectionId) throws Exception;
 	Collection<Post> getPostsByOwner(User u) throws Exception;
 	Collection<Post> getFreshPosts() throws Exception;
 	Collection<Post> getHotPost() throws Exception;

@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.gag.model.Section;
 import com.gag.model.db.DBManager;
@@ -37,9 +40,15 @@ public enum SectionDAO implements ISectionDAO{
 	}
 
 	@Override
-	public Collection<Section> getAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Section> getAll() throws SQLException {
+		List<Section> sec=new ArrayList<>();
+		String sql="SELECT id,name FROM sections;";
+		Statement s=con.createStatement();
+		ResultSet rs=s.executeQuery(sql);
+		while(rs.next()) {
+			sec.add(new Section(rs.getInt("id"), rs.getString("name")));
+		}
+		return sec;
 	}
 
 	

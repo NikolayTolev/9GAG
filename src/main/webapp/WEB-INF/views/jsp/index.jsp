@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
+  <link href="<c:url value="/css/post.css" />" rel="stylesheet">
   <base href="http://localhost:8080/9gag.com/">
 </head>
 <body>
@@ -23,18 +23,58 @@
   <c:import url="left-sidebar.jsp"></c:import>
     <div class="col-sm-8 text-left"> 
       <h1>Welcome</h1>
-      <p></p>
-      <hr>
-      <h3>Test</h3>
-      <p>Lorem ipsum...</p>
+      <p></p>   
+     <table>
+     <c:forEach var="post" items="${ posts }"  >
+		 <tr >
+		 <div class="tp"> 
+		    <h2 onclick="openModel(${post.id})">${post.title}</h2>
+		    </div>
+		    <div>
+		    <img src="${post.imageURL}" onclick="openModel(${post.id})">
+		    </div>
+		    <div class="tf">
+                <button class="L">L</button>
+                <button class="D">D</button>
+                <button class="C" onclick="openModel(${post.id})">C</button>
+		    </div>
+		 </tr>
+	</c:forEach>
+    </table>
+
     </div>
   <c:import url="right-sidebar.jsp"></c:import>
   </div>
 </div>
 
+<div class="model" id="simpleModel">
+	     <div id="2" class="model-content">
+	         <div class="right">
+	             <div class="model-header">
+	                <span class="closeBtn">&times;</span>
+	                 <h2 id="title"></h2>      
+	             </div>
+	             <div class="model-comments">         
+	             </div>
+	         </div>
+	        <div class="left">
+	            <div class="content">
+	            <img src="" id="pic"> 
+	            <div class="model-footer">
+	                <button class="L">L</button>
+	                <button class="D">D</button>
+	                <button class="C">C</button>
+	            </div>
+	            </div>
+	        </div>      
+	    </div>
+    </div>
+
 <footer class="container-fluid text-center">
   <p>Footer Text</p>
 </footer>
+
+<script src="<c:url value="/js/post.js" />"></script>
 
 </body>
 </html>

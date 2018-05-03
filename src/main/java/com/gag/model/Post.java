@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+
+
 public class Post {
 
 	private int id;
@@ -88,5 +93,11 @@ public class Post {
 	public List<Tag> getTags() {
 		return Collections.unmodifiableList(tags);
 	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
+	}
+
 	
 }

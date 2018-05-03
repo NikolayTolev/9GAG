@@ -18,10 +18,16 @@ import com.gag.model.dao.GenderDAO;
 public class ApplicationController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String showMain() {
+	public String showMain(Model m) {
+		try {
+			m.addAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
+			m.addAttribute("sections", SectionDAO.SECTION_DAO.getAll());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "index";
 	}
-	
 	@RequestMapping(value = "/showlogin", method = RequestMethod.GET)
 	public String showLoginPage() {	
 		//Return the login page
