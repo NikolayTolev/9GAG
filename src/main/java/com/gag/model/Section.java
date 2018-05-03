@@ -3,7 +3,7 @@ package com.gag.model;
 public class Section {
 	private int id;
 	private String name;
-	
+
 	public Section(String name) {
 		this.name = name;
 	}

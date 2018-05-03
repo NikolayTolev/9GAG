@@ -16,8 +16,6 @@
 <body>
 
  <c:import url="navbar.jsp"></c:import>
- 
- 
 <div class="container-fluid text-center">    
   <div class="row content">
   <c:import url="left-sidebar.jsp"></c:import>
@@ -25,7 +23,7 @@
       <h1>Welcome</h1>
       <p></p>   
      <table>
-     <c:forEach var="post" items="${ sessionScope.posts }"  >
+     <c:forEach var="post" items="${ posts }"  >
 		 <tr >
 		 <div class="tp"> 
 		    <h2 onclick="openModel(${post.id})">${post.title}</h2>

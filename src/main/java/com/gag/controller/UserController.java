@@ -51,7 +51,8 @@ public class UserController {
 			
 			User user = new User(	request.getParameter("firstName"), request.getParameter("lastName"), 
 									request.getParameter("username"), request.getParameter("password"), 
-									request.getParameter("email"), Integer.parseInt(request.getParameter("gender")));
+									request.getParameter("email"),
+									Integer.parseInt(request.getParameter("gender")));
 			synchronized (UserController.class) {
 				UserManager.USER_MANAGER.registerUser(user);
 			}
@@ -77,12 +78,12 @@ public class UserController {
 			int country =  Integer.parseInt(request.getParameter("country"));
 			int genderId = Integer.parseInt(request.getParameter("gender"));
 			
+			
 			User user = (User) session.getAttribute("user");
 			UserManager.USER_MANAGER.changeProfile(user, firstName, lastName, biography, genderId, country);
 			model.addAttribute("success", "Data changed successfuly.");
 			return "settings";
 		} catch (Exception e) {
-			e.printStackTrace();
 			model.addAttribute("error", e.getMessage());
 			return "settings";
 		}

@@ -15,7 +15,7 @@ public enum TagDAO implements ITagDAO {
 
 	TAG_DAO;
 	private Connection con;
-	
+
 	private TagDAO() {
 		con = DBManager.DB_MANAGER.getConnection();
 	}
@@ -36,7 +36,7 @@ public enum TagDAO implements ITagDAO {
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		Tag tag = null;
-		while(rs.next()) {
+		while (rs.next()) {
 			tag = new Tag(rs.getInt("id"), rs.getString("name"));
 		}
 		return tag;
@@ -45,11 +45,11 @@ public enum TagDAO implements ITagDAO {
 	@Override
 	public List<Tag> getTagsCointainig(String chars) throws SQLException {
 		List<Tag> tags = new ArrayList<>();
-		String sql="SELECT id, name FROM tags WHERE name LIKE '%?%'";
+		String sql = "SELECT id, name FROM tags WHERE name LIKE '%?%'";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, chars);
 		ResultSet rs = ps.executeQuery();
-		while(rs.next()) {
+		while (rs.next()) {
 			tags.add(new Tag(rs.getInt("id"), rs.getString("name")));
 		}
 		return tags;

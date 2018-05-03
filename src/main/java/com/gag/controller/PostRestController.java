@@ -20,22 +20,20 @@ import com.gag.model.dao.SectionDAO;
 @Controller
 public class PostRestController {
 
-
-	@RequestMapping(value="/post/{postId}",method = RequestMethod.GET)
+	@RequestMapping(value = "/post/{postId}", method = RequestMethod.GET)
 	@ResponseBody
-	public Post getPosts(@PathVariable int postId){
+	public Post getPosts(@PathVariable int postId) {
 		Post p;
 		try {
-		  p=  PostDAO.POST_DAO.getPostsById(postId);
-		  } catch ( Exception e) {
-			  return null;		
-		  }
-		return p ;
+			p = PostDAO.POST_DAO.getPostsById(postId);
+		} catch (Exception e) {
+			return null;
+		}
+		return p;
 	}
-	
-	@RequestMapping(value="/{sectionId}",method = RequestMethod.GET)
-	public String getPostsBySection(@PathVariable int sectionId, Model m){
-		List<Post> posts=new ArrayList<>();
+
+	@RequestMapping(value = "/{sectionId}", method = RequestMethod.GET)
+	public String getPostsBySection(@PathVariable int sectionId, Model m) {
 		try {
 			m.addAttribute("posts", PostDAO.POST_DAO.getPostsBySection(sectionId));
 			m.addAttribute("sections", SectionDAO.SECTION_DAO.getAll());
@@ -43,7 +41,7 @@ public class PostRestController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "index" ;
+		return "index";
 	}
-	
+
 }
