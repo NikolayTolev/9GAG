@@ -23,21 +23,21 @@ public enum CommentDAO implements ICommentDAO {
 
 	@Override
 	public Comment getCommentById(int id) throws Exception {
-		String sql="SELECT id, date, content, users_id, posts_id, comments_id FROM comments WHERE id =? ";
+		String sql="SELECT id, date, content, user_id, post_id, parent_id FROM comments WHERE id =? ";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, id);
 		ResultSet rs = ps.executeQuery();
 		Comment comment = null;
 		if (rs.next()) {
-			comment = new Comment(rs.getInt("id"), rs.getDate("date"), PostDAO.POST_DAO.getPostsById(rs.getInt("posts_id")),
-											UserDAO.USER_DAO.getUserById(rs.getInt("users_id")), rs.getString("content"));
+			comment = new Comment(rs.getInt("id"), rs.getDate("date"), PostDAO.POST_DAO.getPostsById(rs.getInt("post_id")),
+											UserDAO.USER_DAO.getUserById(rs.getInt("user_id")), rs.getString("content"));
 		}
 		return comment;
 	}
 
 	@Override
 	public void saveComment(Post p, Comment c) throws Exception {
-		String sql = "INSERT INTO comments (content, users_id, posts_id) VALUES (?, ?, ?);";
+		String sql = "INSERT INTO comments (content, user_id, post_id) VALUES (?, ?, ?);";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, c.getContent());
 		ps.setInt(2, c.getOwner().getId());
@@ -55,7 +55,7 @@ public enum CommentDAO implements ICommentDAO {
 
 	@Override
 	public void saveSubComment(Comment parent, Comment child) throws SQLException {
-		String sql = "INSERT INTO comments (content, users_id, posts_id, comments_id) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO comments (content, user_id, post_id, parent_id) VALUES (?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, child.getContent());
 		ps.setInt(2, child.getOwner().getId());
@@ -66,7 +66,7 @@ public enum CommentDAO implements ICommentDAO {
 
 	@Override
 	public void voteComment(User user, Comment comment, int voteType) throws Exception {
-		String sql = "INSERT INTO comments_have_votes (vote, comments_is, users_id) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO comments_have_votes (vote, comment_id, user_id) VALUES (?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, voteType);
 		ps.setInt(2, comment.getId());
@@ -76,14 +76,14 @@ public enum CommentDAO implements ICommentDAO {
 
 	@Override
 	public List<Comment> getCommentsByPost(Post post) throws Exception {
-		String sql = "SELECT id, date, content, users_id, posts_id, comments_id FROM comments WHERE posts_id=?;";
+		String sql = "SELECT id, date, content, user_id, post_id, parent_id FROM comments WHERE post_id=?;";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, post.getId());
 		ResultSet rs = ps.executeQuery();
 		List<Comment> comments = new ArrayList<>();
 		while(rs.next()) {
-			Comment com = new Comment(rs.getInt("id"), rs.getDate("date"), PostDAO.POST_DAO.getPostsById(rs.getInt("posts_id")),
-					UserDAO.USER_DAO.getUserById(rs.getInt("users_id")), rs.getString("content"));
+			Comment com = new Comment(rs.getInt("id"), rs.getDate("date"), PostDAO.POST_DAO.getPostsById(rs.getInt("post_id")),
+					UserDAO.USER_DAO.getUserById(rs.getInt("user_id")), rs.getString("content"));
 			comments.add(com);
 			com.setReplies(getCommentsByComment(com));
 		}
@@ -101,22 +101,22 @@ public enum CommentDAO implements ICommentDAO {
 
 	@Override
 	public List<Comment> getCommentsByComment(Comment comment) throws Exception {
-		String sql = "SELECT c.id, c.date, c.content, c.users_id, c.posts_id, c.comments_id FROM comments c"
-					 + "JOIN comments p ON (c.comments_id = p.id) WHERE p.id = ?;";
+		String sql = "SELECT c.id, c.date, c.content, c.user_id, c.post_id, c.parent_id FROM comments c"
+					 + "JOIN comments p ON (c.parent_id = p.id) WHERE p.id = ?;";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, comment.getId());
 		ResultSet rs = ps.executeQuery();
 		List<Comment> comments = new ArrayList<>();
 		while(rs.next()) {
-			comments.add(new Comment(rs.getInt("id"), rs.getDate("date"), PostDAO.POST_DAO.getPostsById(rs.getInt("posts_id")), 
-					               	UserDAO.USER_DAO.getUserById(rs.getInt("users_id")), rs.getString("content")));
+			comments.add(new Comment(rs.getInt("id"), rs.getDate("date"), PostDAO.POST_DAO.getPostsById(rs.getInt("post_id")), 
+					               	UserDAO.USER_DAO.getUserById(rs.getInt("user_id")), rs.getString("content")));
 		}
 		return comments;
 	}
 
 	@Override
 	public void deleteCommentVote(User user, Comment comment) throws Exception {
-		String sql = "DELETE FROM comments_have_votes WHERE comments_id = ? AND users_id = ?;";
+		String sql = "DELETE FROM comments_have_votes WHERE comment_id = ? AND user_id = ?;";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, comment.getId());
 		ps.setInt(2, user.getId());
@@ -125,7 +125,7 @@ public enum CommentDAO implements ICommentDAO {
 
 	@Override
 	public int countVotesOfComment(Comment comment) throws Exception {
-		String sql = "SELECT SUM(vote) AS vote FROM comments_have_votes WHERE comments_id = ?;";
+		String sql = "SELECT SUM(vote) AS vote FROM comments_have_votes WHERE comment_id = ?;";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, comment.getId());
 		ResultSet rs = ps.executeQuery();

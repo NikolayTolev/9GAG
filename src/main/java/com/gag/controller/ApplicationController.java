@@ -1,5 +1,6 @@
 package com.gag.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,15 +14,17 @@ import com.gag.model.Country;
 import com.gag.model.Gender;
 import com.gag.model.dao.CountryDAO;
 import com.gag.model.dao.GenderDAO;
+import com.gag.model.dao.PostDAO;
+import com.gag.model.dao.SectionDAO;
 
 @Controller
 public class ApplicationController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String showMain(Model m) {
+	public String showMain(Model m, HttpSession session) {
 		try {
-			m.addAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
-			m.addAttribute("sections", SectionDAO.SECTION_DAO.getAll());
+			session.setAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
+			session.setAttribute("sections", SectionDAO.SECTION_DAO.getAll());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

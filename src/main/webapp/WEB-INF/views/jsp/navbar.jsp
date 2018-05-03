@@ -19,9 +19,10 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a onclick="location.href=">Home</a></li>
+        <li><a onclick="location.href='//'">Home</a></li>
         <li><a href="#">Videos <span class="glyphicon glyphicon-film"></span></a></li>
-        <form class="navbar-form navbar-left" action="/action_page.php">
+      </ul>
+      <form class="navbar-form navbar-left" action="/action_page.php">
 		  <div class="input-group">
 		    <input type="text" class="form-control" placeholder="Search">
 		    <div class="input-group-btn">
@@ -31,7 +32,6 @@
 		    </div>
 		  </div>
 		</form>
-      </ul>
       <c:choose>
 		  <c:when test="${sessionScope.user != null}">
 		    	<ul class="nav navbar-nav navbar-right">

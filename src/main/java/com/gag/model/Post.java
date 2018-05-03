@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 
@@ -18,6 +16,7 @@ public class Post {
 	private String imageURL;
 	private LocalDateTime date;
 	private String title;
+	private boolean isVideo;
 	private List<Tag> tags;
 	private List<Comment> comments;
 	
@@ -94,6 +93,14 @@ public class Post {
 		return Collections.unmodifiableList(tags);
 	}
 	
+	public boolean isVideo() {
+		return isVideo;
+	}
+
+	public void setVideo(boolean isVideo) {
+		this.isVideo = isVideo;
+	}
+
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);

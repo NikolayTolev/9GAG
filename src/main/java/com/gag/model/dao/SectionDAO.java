@@ -42,9 +42,9 @@ public enum SectionDAO implements ISectionDAO{
 	@Override
 	public List<Section> getAll() throws SQLException {
 		List<Section> sec=new ArrayList<>();
-		String sql="SELECT id,name FROM sections;";
-		Statement s=con.createStatement();
-		ResultSet rs=s.executeQuery(sql);
+		String sql="SELECT id, name FROM sections;";
+		Statement s= con.createStatement();
+		ResultSet rs= s.executeQuery(sql);
 		while(rs.next()) {
 			sec.add(new Section(rs.getInt("id"), rs.getString("name")));
 		}

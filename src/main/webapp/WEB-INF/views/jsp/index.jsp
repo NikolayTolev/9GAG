@@ -25,7 +25,7 @@
       <h1>Welcome</h1>
       <p></p>   
      <table>
-     <c:forEach var="post" items="${ posts }"  >
+     <c:forEach var="post" items="${ sessionScope.posts }"  >
 		 <tr >
 		 <div class="tp"> 
 		    <h2 onclick="openModel(${post.id})">${post.title}</h2>
