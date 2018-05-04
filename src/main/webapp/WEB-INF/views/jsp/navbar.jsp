@@ -45,8 +45,7 @@
 							 </ul>
 						</div>
         			</li>
-        			<li><button id="uploadButton" class="btn btn-danger navbar-btn">+ Upload</button></li>
-      			</ul>
+        			<li><button id="uploadButton" class="btn btn-danger navbar-btn" onclick="openModelPost()">+ Upload</button></li></ul>
 		  </c:when>
 		  <c:otherwise>
 		         <ul class="nav navbar-nav navbar-right">

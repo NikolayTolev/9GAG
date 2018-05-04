@@ -131,7 +131,7 @@ public enum PostDAO implements IPostDAO {
 		PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, p.getImageURL());
 		ps.setString(2, p.getTitle());
-		ps.setInt(3, p.getOwner().getId());
+		ps.setInt(3, 1);
 		ps.setInt(4, p.getSection().getId());
 		ps.executeUpdate();
 		ResultSet rs = ps.getGeneratedKeys();
