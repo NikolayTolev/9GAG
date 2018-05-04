@@ -28,7 +28,8 @@ function openModel(postId){
 		 var title=document.getElementById("title");
 		 title.textContent=post.title;
 	     var pic=document.getElementById("pic");
-	     pic.setAttribute("src",post.imageURL);
+	     pic.setAttribute("src","img/"+post.imageURL);
+	     pic.style.textAlign="center";
 	     m.style.display="block";
 	});
 

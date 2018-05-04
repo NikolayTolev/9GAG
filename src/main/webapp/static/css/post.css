@@ -29,7 +29,7 @@ body{
 
 .model-content{
     background-color:none;
-    margin: 3% auto;
+    margin: 2% auto;
     width:70%;
     height:90%;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2) ,
@@ -50,6 +50,11 @@ body{
     float: left;
     width: 70%;
     height:100%
+}
+
+.content-post{
+	text-align: center;
+	margin: 10%;
 }
 .model-header h2,.model-footer h3{
 

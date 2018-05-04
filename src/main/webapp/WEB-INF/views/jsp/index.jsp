@@ -30,7 +30,8 @@
 		    <h2 onclick="openModel(${post.id})">${post.title}</h2>
 		    </div>
 		    <div>
-		    <img src="${post.imageURL}" onclick="openModel(${post.id})">
+		  
+		    <img src="img/${post.imageURL}" onclick="openModel(${post.id})">
 		    </div>
 		    <div class="tf">
                 <button class="L">L</button>
@@ -57,13 +58,13 @@
 	             </div>
 	         </div>
 	        <div class="left">
-	            <div class="content">
-	            <img src="" id="pic"> 
+	            <div class="content-post">
+	           		 <img  id="pic"> 
+	            </div>
 	            <div class="model-footer">
 	                <button class="L">L</button>
 	                <button class="D">D</button>
 	                <button class="C">C</button>
-	            </div>
 	            </div>
 	        </div>      
 	    </div>
