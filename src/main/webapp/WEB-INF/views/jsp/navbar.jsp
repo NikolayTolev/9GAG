@@ -19,7 +19,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a onclick="location.href=">Home</a></li>
+        <li><a href="/9gag.com/">Home</a></li>
         <li><a href="#">Videos <span class="glyphicon glyphicon-film"></span></a></li>
         <form class="navbar-form navbar-left" action="/action_page.php">
 		  <div class="input-group">
@@ -37,7 +37,7 @@
 		    	<ul class="nav navbar-nav navbar-right">
         			<li >
         				<div class="dropdown" style="display: inline-block">
-					 	<img src="https://vignette.wikia.nocookie.net/epicrapbattlesofhistory/images/4/4a/Mr-Bean-Meme.jpg/revision/latest?cb=20160912174428" class="img-circle" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					 	<img src="download/${sessionScope.user.photo}" class="img-circle" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							 <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
 							   <li><a class="dropdown-item">Profile</a></li>
 							   <li><a class="dropdown-item" onclick="location.href='showSettings'">Settings</a></li>

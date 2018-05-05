@@ -23,7 +23,7 @@
     <div class="col-sm-8 text-left"> 
       <h1>Welcome</h1>
       <p></p>   
-     <table>
+     <table align="center">
      <c:forEach var="post" items="${ posts }"  >
 		 <tr >
 		 <div class="tp"> 
@@ -31,7 +31,7 @@
 		    </div>
 		    <div>
 		  
-		    <img src="img/${post.imageURL}" onclick="openModel(${post.id})">
+		    <img src="img/${post.imageURL}" onclick="openModel(${post.id})" style="height: 500px; width: 500px">
 		    </div>
 		    <div class="tf">
                 <button class="L">L</button>

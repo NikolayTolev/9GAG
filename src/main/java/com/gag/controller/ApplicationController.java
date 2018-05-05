@@ -3,8 +3,10 @@ package com.gag.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +21,15 @@ import com.gag.model.dao.SectionDAO;
 
 @Controller
 public class ApplicationController {
+	
+	@Autowired
+	private ServletContext context;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showMain(Model m, HttpSession session) {
 		try {
-			session.setAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
-			session.setAttribute("sections", SectionDAO.SECTION_DAO.getAll());
+			context.setAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
+			context.setAttribute("sections", SectionDAO.SECTION_DAO.getAll());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

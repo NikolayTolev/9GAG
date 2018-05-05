@@ -28,9 +28,10 @@ public class User {
 		this.posts=new ArrayList<>();
 	}
 
-	public User(int id, String firstName, String lastName, String username, String password, String email,String biography, int gender, int country) {
+	public User(int id, String firstName, String lastName, String photo, String username, String password, String email,String biography, int gender, int country) {
 		this(firstName, lastName, username, password, email, gender);
 		this.id = id;
+		this.photo = photo;
 		this.biography = biography;
 		this.countryId = country;
 	}

@@ -7,6 +7,7 @@ import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -26,12 +27,13 @@ import com.gag.model.Tag;
 import com.gag.model.User;
 import com.gag.model.dao.PostDAO;
 import com.gag.model.dao.TagDAO;
+import com.gag.model.dao.UserDAO;
 
 @Controller
 @MultipartConfig
 public class FileController {
 	
-	private static final String FILE_PATH = "/Users/user1/Desktop/uploads/";
+	private static final String FILE_PATH = "C:\\Users\\HP\\Desktop\\uploads\\";
 
 //	@RequestMapping(value="/upload", method=RequestMethod.GET)
 //	public String showUploadForm() {
@@ -67,4 +69,37 @@ public class FileController {
 		return "index";
 	}
 
+	@RequestMapping(value="/uploadAvatar", method = RequestMethod.POST)
+	public String saveAvatar(HttpServletRequest request, @RequestParam("avatar") MultipartFile file, HttpSession session) {
+		try {
+			String fileName = "avatar" + file.getOriginalFilename();
+			File serverFile = new File(FILE_PATH + fileName);
+			serverFile.createNewFile();
+			Files.copy(file.getInputStream(), serverFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			User user = (User) session.getAttribute("user");
+			user.setPhoto(fileName);
+			UserDAO.USER_DAO.updateUserData(user);
+			session.setAttribute("user", user);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "settings";
+	}
+	
+	@RequestMapping(value="/download/{filename:.+}", method= RequestMethod.GET)
+	public void showAvatar(HttpServletResponse resp, @PathVariable("filename") String fileName) {
+		
+		try {
+			System.out.println(fileName);
+			File serverFile = new File(FILE_PATH + fileName);
+			Files.copy(serverFile.toPath(), resp.getOutputStream());	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

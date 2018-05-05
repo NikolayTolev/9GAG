@@ -48,7 +48,7 @@ public enum UserDAO implements IUserDAO {
 		ps.setInt(1, id);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
-			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"),
+			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("photo"),
 					rs.getString("username"), rs.getString("password"), rs.getString("email"), rs.getString("biography"),
 					rs.getInt("gender_id"),
 					rs.getInt("country_id"));
@@ -64,7 +64,7 @@ public enum UserDAO implements IUserDAO {
 		ps.setString(1, username);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
-			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"),
+			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("photo"),
 					rs.getString("username"), rs.getString("password"), rs.getString("email"),
 					rs.getString("biography"), rs.getInt("gender_id"), rs.getInt("country_id"));
 		}
@@ -97,14 +97,17 @@ public enum UserDAO implements IUserDAO {
 
 	@Override
 	public void updateUserData(User u) throws Exception {
-		String sql = "UPDATE users SET first_name=?, last_name=?, biography=?, gender_id=?, country_id=? WHERE id=?";
+		String sql = "UPDATE users SET password=?, first_name=?, last_name=?, photo=?, "
+					+ "biography=?, gender_id=?, country_id=? WHERE id=?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setString(1, u.getFirstName());
-		ps.setString(2, u.getLastName());
-		ps.setString(3, u.getBiography());
-		ps.setInt(4, u.getGenderId());
-		ps.setInt(5, u.getCountryId());
-		ps.setInt(6, u.getId());
+		ps.setString(1, u.getPassword());
+		ps.setString(2, u.getFirstName());
+		ps.setString(3, u.getLastName());
+		ps.setString(4, u.getPhoto());
+		ps.setString(5, u.getBiography());
+		ps.setInt(6, u.getGenderId());
+		ps.setInt(7, u.getCountryId());
+		ps.setInt(8, u.getId());
 		ps.executeUpdate();
 	}
 }
