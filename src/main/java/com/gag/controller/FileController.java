@@ -67,27 +67,6 @@ public class FileController {
 		return "index";
 	}
 
-	@RequestMapping(value="/uploadAvatar", method = RequestMethod.POST)
-	public String saveAvatar(HttpServletRequest request, @RequestParam("avatar") MultipartFile file, HttpSession session) {
-		try {
-			String fileName = "avatar" + file.getOriginalFilename();
-			File serverFile = new File(FILE_PATH + fileName);
-			serverFile.createNewFile();
-			Files.copy(file.getInputStream(), serverFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			User user = (User) session.getAttribute("user");
-			user.setPhoto(fileName);
-			UserDAO.USER_DAO.updateUserData(user);
-			session.setAttribute("user", user);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "settings";
-	}
-	
 	@RequestMapping(value="/download/{filename:.+}", method= RequestMethod.GET)
 	public void showAvatar(HttpServletResponse resp, @PathVariable("filename") String fileName) {
 		

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +18,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.gag.controller.manager.UserManager;
 import com.gag.model.User;
+import com.gag.model.dao.UserDAO;
+import com.gag.service.NotificationService;
 import com.gag.util.exceptions.RegisterException;
 
 
 @Controller
 public class UserController {
 
+	@Autowired
+	private NotificationService notificationService;
+	
 	private static final String FILE_PATH = "C:\\Users\\HP\\Desktop\\uploads\\";
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -61,9 +67,11 @@ public class UserController {
 									Integer.parseInt(request.getParameter("gender")));
 			synchronized (UserController.class) {
 				UserManager.USER_MANAGER.registerUser(user);
+				notificationService.sendNotification(user);
 			}
-			session.setAttribute("user", user);
-			session.setMaxInactiveInterval(500);
+//			session.setAttribute("user", user);
+//			session.setMaxInactiveInterval(500);
+			model.addAttribute("success", "Activation code has been sent to your email.");
 			return "index";
 		} catch (RegisterException | SQLException e) {
 			model.addAttribute("error", e.getMessage());
@@ -120,5 +128,19 @@ public class UserController {
 			model.addAttribute("error", e.getMessage());
 			return "login";
 		}
+	}
+	
+	@RequestMapping(value= "/activate", method= RequestMethod.POST)
+	public String activateAccount(HttpServletRequest request, Model model) {
+		try {
+			String username = (String) request.getParameter("username");
+			String code = (String) request.getParameter("code");
+			UserManager.USER_MANAGER.activateUser(username, code);
+			model.addAttribute("success", "Activation succeeded!");
+		} catch (Exception e) {
+			model.addAttribute("error", "Sorry, there was a problem: " + e.getMessage());
+			return "verify";
+		}
+		return "login";
 	}
 }

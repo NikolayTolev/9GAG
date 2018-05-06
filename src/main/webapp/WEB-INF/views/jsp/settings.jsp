@@ -33,7 +33,7 @@
 				<form action="update" method="post" enctype="multipart/form-data">
 					<table align="center">
 						<tr>
-							<td rowspan="2">
+							<td rowspan="3">
 								<div align="center">
 									<img src="img/${sessionScope.user.photo}"
 										style="width: 200px; height: 200px">
@@ -46,6 +46,7 @@
 								<input type="file" name="avatar">
 							</td>
 						</tr>
+						<tr></tr>
 						<tr>
 							<td><i>First&nbsp;name&nbsp;</i></td>
 							<td><input type="text" name="firstName" style="width: 380px"

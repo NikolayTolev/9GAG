@@ -73,4 +73,10 @@ public class ApplicationController {
 			return "register";
 		}	
 	}
+	
+	@RequestMapping(value="/verify", method= RequestMethod.GET)
+	public String showVerificationPage() {
+		// shows verification page
+		return "verify";
+	}
 }

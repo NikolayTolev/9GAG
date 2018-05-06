@@ -4,9 +4,14 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.aop.target.SimpleBeanTargetSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import com.gag.model.BCrypt;
 import com.gag.model.User;
 import com.gag.model.dao.UserDAO;
+import com.gag.service.NotificationService;
 import com.gag.util.exceptions.RegisterException;
 
 public enum UserManager {
@@ -49,7 +54,7 @@ public enum UserManager {
 	public User loginUser(String username, String password) throws Exception {
 		User u = UserDAO.USER_DAO.getUserByUsername(username);
 		if (username == null || password == null || u==null || !(u.getUsername().equals(username))
-				|| !(BCrypt.checkpw(password, u.getPassword()))) {
+				|| !(BCrypt.checkpw(password, u.getPassword())) || u.getActivationCode() != null) {
 			throw new Exception("Invalid username/password");
 		}
 		return u;
@@ -87,11 +92,20 @@ public enum UserManager {
 		UserDAO.USER_DAO.deleteUser(user);
 	}
 	
+	public void activateUser(String username, String code) throws Exception {
+		User user = UserDAO.USER_DAO.getUserByUsername(username);
+		System.out.println(user.getActivationCode());
+		if (!user.getActivationCode().equals(code)) {
+			throw new Exception("Invalid activation code");
+		}
+		user.setActivationCode(null);
+		UserDAO.USER_DAO.updateUserData(user);
+	}
+	
 	private boolean emailValidator(String email) {
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 				Pattern.CASE_INSENSITIVE);
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
-		
 		if (matcher.find()) {
 			String emailDomain = email.substring(email.indexOf("@")+1);
 			System.out.println(emailDomain);

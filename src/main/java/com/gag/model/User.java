@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import scala.util.Random;
+
 public class User {
 
+	private static final String[] ALPHABET = {	"A", "a", "B", "b", "C", "c", "D", "d", "E", "e", "F", "f", "G", "g",
+												"H", "h", "I", "i", "J", "j", "K", "k", "L", "l", "M", "m", "N", "n", 
+												"O", "o", "P", "p", "Q", "q", "R", "r", "S", "s", "T", "t", "U", "u", 
+												"V", "v", "W", "w", "X", "x", "Y", "y", "Z", "z"};
 	private int id;
 	private String firstName;
 	private String lastName;
@@ -16,6 +22,7 @@ public class User {
 	private int countryId;
 	private String biography;
 	private String photo;
+	private String activationCode;
 	private List<Post> posts;
 	
 	public User(String firstName, String lastName, String username, String password, String email, int gender) {
@@ -25,15 +32,18 @@ public class User {
 		this.password = password;
 		this.email = email;
 		this.genderId = gender;
+		this.activationCode = this.getRandomCode();
 		this.posts=new ArrayList<>();
 	}
 
-	public User(int id, String firstName, String lastName, String photo, String username, String password, String email,String biography, int gender, int country) {
+	public User(int id, String firstName, String lastName, String photo, String username, String password, String email,
+				String biography, int gender, int country, String activationCode) {
 		this(firstName, lastName, username, password, email, gender);
 		this.id = id;
 		this.photo = photo;
 		this.biography = biography;
 		this.countryId = country;
+		this.activationCode = activationCode;
 	}
 
 	public int getId() {
@@ -104,11 +114,31 @@ public class User {
 		this.countryId = countryId;
 	}
 
+	public String getActivationCode() {
+		return activationCode;
+	}
+
+	public void setActivationCode(String activationCode) {
+		this.activationCode = activationCode;
+	}
+
 	public void deletePost(Post p) {
 		posts.remove(p);
 	}
 	
 	public List<Post> getPosts(){
 		return Collections.unmodifiableList(posts);
+	}
+	
+	private String getRandomCode() {
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < 10; i++) {
+			if (i%2 == 0) {
+				sb.append(new Random().nextInt(10));
+			} else {
+				sb.append(ALPHABET[new Random().nextInt(ALPHABET.length)]);
+			}
+		}
+		return sb.toString();
 	}
 }

@@ -17,6 +17,7 @@
   <c:import url="left-sidebar.jsp"></c:import>
     <div class="col-sm-8 text-center"> 
       <h5 style="color: red"><i>${error}</i></h5>
+      <h5 style="color: blue"><i>${success}</i></h5>
 		<h1>Login</h1>
 		<form action="login" method="post">
 			<table align="center">

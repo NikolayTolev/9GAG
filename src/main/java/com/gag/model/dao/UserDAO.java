@@ -20,7 +20,7 @@ public enum UserDAO implements IUserDAO {
 
 	@Override
 	public void saveUser(User u) throws SQLException {
-		String sql = "INSERT INTO users (email, password, username, first_name, last_name, gender_id) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO users (email, password, username, first_name, last_name, gender_id, activation_code) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, u.getEmail());
 		ps.setString(2, BCrypt.hashpw(u.getPassword(), BCrypt.gensalt()));
@@ -28,6 +28,7 @@ public enum UserDAO implements IUserDAO {
 		ps.setString(4, u.getFirstName());
 		ps.setString(5, u.getLastName());
 		ps.setInt(6, u.getGenderId());
+		ps.setString(7, u.getActivationCode());
 		ps.executeUpdate();
 	}
 
@@ -50,23 +51,22 @@ public enum UserDAO implements IUserDAO {
 		if (rs.next()) {
 			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("photo"),
 					rs.getString("username"), rs.getString("password"), rs.getString("email"), rs.getString("biography"),
-					rs.getInt("gender_id"),
-					rs.getInt("country_id"));
+					rs.getInt("gender_id"), rs.getInt("country_id"), rs.getString("activation_code"));
 		}
 		return null;
 	}
 
 	@Override
 	public User getUserByUsername(String username) throws SQLException {
-		String sql = "SELECT id, email, password, username, first_name, last_name, photo, biography, gender_id, country_id FROM users"
-				+ " WHERE username=?";
+		String sql = "SELECT id, email, password, username, first_name, last_name, photo, biography, gender_id, country_id, "
+				+ "activation_code FROM users WHERE username=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, username);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
 			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("photo"),
 					rs.getString("username"), rs.getString("password"), rs.getString("email"),
-					rs.getString("biography"), rs.getInt("gender_id"), rs.getInt("country_id"));
+					rs.getString("biography"), rs.getInt("gender_id"), rs.getInt("country_id"), rs.getString("activation_code"));
 		}
 		return null;
 	}
@@ -98,7 +98,7 @@ public enum UserDAO implements IUserDAO {
 	@Override
 	public void updateUserData(User u) throws Exception {
 		String sql = "UPDATE users SET password=?, first_name=?, last_name=?, photo=?, "
-					+ "biography=?, gender_id=?, country_id=? WHERE id=?";
+					+ "biography=?, gender_id=?, country_id=?, activation_code=? WHERE id=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, u.getPassword());
 		ps.setString(2, u.getFirstName());
@@ -107,7 +107,8 @@ public enum UserDAO implements IUserDAO {
 		ps.setString(5, u.getBiography());
 		ps.setInt(6, u.getGenderId());
 		ps.setInt(7, u.getCountryId());
-		ps.setInt(8, u.getId());
+		ps.setString(8, u.getActivationCode());
+		ps.setInt(9, u.getId());
 		ps.executeUpdate();
 	}
 }
