@@ -40,6 +40,13 @@ public enum UserDAO implements IUserDAO {
 		ps.setString(2, u.getEmail());
 		ps.executeUpdate();
 	}
+	
+	@Override
+	public void deleteInactiveUsers() throws SQLException {
+		String sql = "DELETE FROM users WHERE activation_code IS NOT NULL";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.executeUpdate();
+	}
 
 	@Override
 	public User getUserById(int id) throws SQLException {

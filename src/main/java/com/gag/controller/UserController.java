@@ -44,7 +44,7 @@ public class UserController {
 			String password = request.getParameter("password");
 			User user = UserManager.USER_MANAGER.loginUser(username, password);
 			session.setAttribute("user", user);
-			session.setMaxInactiveInterval(500);
+			session.setMaxInactiveInterval(10000);
 			return "index";
 		} catch (Exception e) {
 			model.addAttribute("error", e.getMessage());
@@ -69,8 +69,6 @@ public class UserController {
 				UserManager.USER_MANAGER.registerUser(user);
 				notificationService.sendNotification(user);
 			}
-//			session.setAttribute("user", user);
-//			session.setMaxInactiveInterval(500);
 			model.addAttribute("success", "Activation code has been sent to your email.");
 			return "index";
 		} catch (RegisterException | SQLException e) {

@@ -18,6 +18,7 @@ import com.gag.model.dao.CountryDAO;
 import com.gag.model.dao.GenderDAO;
 import com.gag.model.dao.PostDAO;
 import com.gag.model.dao.SectionDAO;
+import com.gag.model.dao.UserDAO;
 
 @Controller
 public class ApplicationController {
@@ -30,6 +31,19 @@ public class ApplicationController {
 		try {
 			context.setAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
 			context.setAttribute("sections", SectionDAO.SECTION_DAO.getAll());
+			Thread checker = new Thread(() -> {
+				while(true) {
+					try {
+						Thread.sleep(60000000);
+						UserDAO.USER_DAO.deleteInactiveUsers();
+					} catch (InterruptedException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
+			checker.setDaemon(true);
+			checker.start();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

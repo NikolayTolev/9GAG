@@ -26,7 +26,9 @@ public class NotificationService {
 		mail.setSubject("Registration code");
 		mail.setText(	"Hello, " + user.getUsername() + "\n" + "\n" + 
 						"Thank you for the wish to become one of our members! To finish your registration " + "\n"
-						+ "you should insert the activation code in http://localhost:8080/9gag.com/verify" + "\n" + "\n" + "Code:" + user.getActivationCode());
+						+ "you should insert the activation code here: http://localhost:8080/9gag.com/verify" + "\n"
+						+ " The code is active in 24h. Afrer that period the account will be deleted."
+						+"\n" + "\n" + "Code: " + user.getActivationCode());
 		
 		javaMailSender.send(mail);
 	}
