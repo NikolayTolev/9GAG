@@ -65,7 +65,7 @@ public class ApplicationController {
 	public String showRegister(Model model) {
 		try {
 			List<Gender> genders = GenderDAO.GENDER_DAO.getAllGenders();
-			model.addAttribute("genders", genders);
+			context.setAttribute("genders", genders);
 			// return the register page
 			return "register";
 		} catch (Exception e) {

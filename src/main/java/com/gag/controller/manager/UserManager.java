@@ -55,19 +55,25 @@ public enum UserManager {
 		return u;
 	}
 
-	public void changeProfile(User user, String firstName, String lastName, String biography, int genderId, int country) throws Exception {
+	public void changeProfile(	User user, String firstName, String lastName, String photo, String biography,
+								int genderId, int country) throws Exception {
 		if (firstName == null || firstName.trim().isEmpty()) {
 			throw new Exception("The field for first name can not be empty.");
 		}
 		if (lastName == null || lastName.trim().isEmpty()) {
 			throw new Exception("The field for last name can not be empty.");
 		}
-		if (user.getFirstName().equals(firstName) && user.getLastName().equals(lastName) && (user.getGenderId() == genderId) 
-				&& biography.equals(user.getBiography()) && (user.getCountryId() == country)) {
+		if (user.getFirstName().equals(firstName) && 
+			user.getLastName().equals(lastName) && 
+			(user.getGenderId() == genderId) && 
+			photo.equals(user.getPhoto()) && 
+			biography.equals(user.getBiography()) && 
+			(user.getCountryId() == country)) {
 			throw new Exception("Nothing was changed.");
 		}
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
+		user.setPhoto(photo);
 		user.setGenderId(genderId);
 		user.setCountryId(country);
 		user.setBiography(biography);

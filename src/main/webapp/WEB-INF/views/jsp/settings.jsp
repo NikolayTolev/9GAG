@@ -30,26 +30,22 @@
 					<i>${success}</i>
 				</h5>
 				<h1>Settings</h1>
-				<table align="center">
-					<tr>
-						<td rowspan="2">
-							<div align="center">
-								<img src="img/${sessionScope.user.photo}" style="width: 200px; height: 200px">
-							</div>
-						</td>
-						<td style="padding: 10%"></td>
-					</tr>
-					<tr>
-						<td style="padding: 2%" align="left">
-							<form action="uploadAvatar" method="post" enctype="multipart/form-data">
-								<input type="file" name="avatar">
-								<input type="submit" value="Upload file" align="left">
-							</form>
-						</td>
-					</tr>
-				</table>
-				<form action="update" method="post">
+				<form action="update" method="post" enctype="multipart/form-data">
 					<table align="center">
+						<tr>
+							<td rowspan="2">
+								<div align="center">
+									<img src="img/${sessionScope.user.photo}"
+										style="width: 200px; height: 200px">
+								</div>
+							</td>
+							<td style="padding: 10%"></td>
+						</tr>
+						<tr>
+							<td>
+								<input type="file" name="avatar">
+							</td>
+						</tr>
 						<tr>
 							<td><i>First&nbsp;name&nbsp;</i></td>
 							<td><input type="text" name="firstName" style="width: 380px"
@@ -64,16 +60,29 @@
 							<td>Gender&nbsp;</td>
 							<td><select style="width: 380px; height: 30px" name="gender">
 									<c:forEach var="gender" items="${sessionScope.genders}">
-										<option value="${gender.id}">${gender.type}</option>
+										<c:choose>
+											<c:when test="${gender.id == sessionScope.user.genderId}">
+												<option selected="selected" value="${gender.id}">${gender.type}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${gender.id}">${gender.type}</option>
+											</c:otherwise>
+										</c:choose>
 									</c:forEach>
 							</select></td>
 						</tr>
 						<tr>
 							<td><i>Country&nbsp;</i></td>
-							<td><select style="width: 380px; height: 30px"
-								name="country">
+							<td><select style="width: 380px; height: 30px" name="country">
 									<c:forEach var="country" items="${sessionScope.countries}">
-										<option value="${country.id}">${country.name}</option>
+										<c:choose>
+											<c:when test="${country.id == sessionScope.user.countryId}">
+												<option selected="selected" value="${country.id}">${country.name}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${country.id}">${country.name}</option>
+											</c:otherwise>
+										</c:choose>
 									</c:forEach>
 							</select></td>
 						</tr>
