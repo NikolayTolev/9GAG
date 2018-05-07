@@ -29,21 +29,9 @@ public class ApplicationController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showMain(Model m, HttpSession session) {
 		try {
-			context.setAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
 			context.setAttribute("sections", SectionDAO.SECTION_DAO.getAll());
-			Thread checker = new Thread(() -> {
-				while(true) {
-					try {
-						Thread.sleep(60000000);
-						UserDAO.USER_DAO.deleteInactiveUsers();
-					} catch (InterruptedException | SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			});
-			checker.setDaemon(true);
-			checker.start();
+			context.setAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,5 +80,11 @@ public class ApplicationController {
 	public String showVerificationPage() {
 		// shows verification page
 		return "verify";
+	}
+	
+	@RequestMapping(value="/profile", method= RequestMethod.GET)
+	public String showProfile() {
+		// show profile page
+		return "profile";
 	}
 }

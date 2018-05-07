@@ -50,8 +50,8 @@ public enum UserDAO implements IUserDAO {
 
 	@Override
 	public User getUserById(int id) throws SQLException {
-		String sql = "SELECT id, email, password, username, first_name, last_name, photo, biography, gender_id,country_id FROM users"
-				+ " WHERE id=?";
+		String sql = "SELECT id, email, password, username, first_name, last_name, photo, biography, gender_id, country_id,"
+				+ " activation_code FROM users WHERE id=?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, id);
 		ResultSet rs = ps.executeQuery();
@@ -71,9 +71,10 @@ public enum UserDAO implements IUserDAO {
 		ps.setString(1, username);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
-			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("photo"),
-					rs.getString("username"), rs.getString("password"), rs.getString("email"),
-					rs.getString("biography"), rs.getInt("gender_id"), rs.getInt("country_id"), rs.getString("activation_code"));
+			return new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"),
+							rs.getString("photo"), rs.getString("username"), rs.getString("password"), 
+							rs.getString("email"), rs.getString("biography"), rs.getInt("gender_id"),
+							rs.getInt("country_id"), rs.getString("activation_code"));
 		}
 		return null;
 	}

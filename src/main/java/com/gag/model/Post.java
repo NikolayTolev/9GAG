@@ -49,6 +49,11 @@ public class Post {
 		this.imageURL = imageURL;
 		return this;
 	}
+	
+	public Post comments(List<Comment> comments) {
+		this.comments=comments;
+		return this;
+	}
 
 	public int getId() {
 		return id;

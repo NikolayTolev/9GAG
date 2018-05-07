@@ -5,12 +5,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +27,7 @@ import com.gag.model.Section;
 import com.gag.model.Tag;
 import com.gag.model.User;
 import com.gag.model.dao.PostDAO;
+import com.gag.model.dao.SectionDAO;
 import com.gag.model.dao.TagDAO;
 import com.gag.model.dao.UserDAO;
 
@@ -31,18 +35,17 @@ import com.gag.model.dao.UserDAO;
 @MultipartConfig
 public class FileController {
 	
+	@Autowired 
+    ServletContext application;
 	private static final String FILE_PATH = "C:\\Users\\HP\\Desktop\\uploads\\";
-
-//	@RequestMapping(value="/upload", method=RequestMethod.GET)
-//	public String showUploadForm() {
-//		return "upload";
-//	}
+	private static final String RANDOMS_PATH = FILE_PATH + "random\\";
 
 	@RequestMapping(value="/upload/post", method=RequestMethod.POST)
 	public String saveImage(Model m, HttpSession session, @RequestParam("file") MultipartFile uploadedFile,
 			                         @RequestParam("description") String description,
+			                         @RequestParam("type") String type,
 			                         @RequestParam("tag") String tag,
-			                         @RequestParam("section") Section sec) throws IOException {
+			                         @RequestParam("section") int sec) throws IOException {
 //		String extension = FilenameUtils.getExtension(uploadedFile.getOriginalFilename());
 		String fileName = "9gag-"+uploadedFile.getOriginalFilename();
 		File serverFile = new File(FILE_PATH + fileName);
@@ -53,11 +56,19 @@ public class FileController {
 		Tag g =new Tag(tag);
 		try {
 		TagDAO.TAG_DAO.saveTag(g);
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		p.title(description);
 		p.addTags(g);
-		p.section(sec);
+		List<Section> sections = (List<Section>)application.getAttribute("sections");
+        for(Section section :  sections){
+        	if(section.getId()==sec) {
+        		p.section(section);
+        		break;
+        	}
+        }
 		try {
 			PostDAO.POST_DAO.savePost(p);
 		} catch (SQLException e) {
@@ -78,5 +89,10 @@ public class FileController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value="/randomize", method= RequestMethod.GET)
+	public void showRandPics() {
+		
 	}
 }

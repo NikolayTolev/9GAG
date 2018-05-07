@@ -27,7 +27,9 @@ public enum TagDAO implements ITagDAO {
 		ps.setString(1, g.getName());
 		ps.executeUpdate();
 		ResultSet rs = ps.getGeneratedKeys();
-		g.setId(rs.getInt("id"));
+		rs.next();
+		g.setId(rs.getInt(1));
+		System.out.println(g.getId());
 	}
 
 	@Override

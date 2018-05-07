@@ -15,7 +15,7 @@ public interface IPostDAO {
 
 	Collection<Post> getPostsBySection(int sectionId) throws Exception;
 
-	Collection<Post> getPostsByOwner(User u) throws Exception;
+	Collection<Post> getPostsByOwner(int userId) throws Exception;
 
 	Collection<Post> getFreshPosts() throws Exception;
 
@@ -27,5 +27,7 @@ public interface IPostDAO {
 
 	void deletePost(Post p) throws Exception;
 
-	void votePost(User u, Post p, int vote) throws Exception;
+	void votePost(int userId, int postId, int vote) throws Exception;
+	
+	int getAllVotes(int postId) throws Exception;
 }
