@@ -23,11 +23,11 @@ function ajax_get(url, callback) {
     xmlhttp.send();
 }
 
-function ajax_get_post(url,postId,callback) {
+function ajax_get_post(url,postId) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            callback(postId);
+           
         }
     };
     var form = new FormData();
@@ -38,9 +38,19 @@ function ajax_get_post(url,postId,callback) {
 
 
 function upvotePost(postId){
-	ajax_get_post('/9gag.com/upvote',postId,countPoints);
+	ajax_get_post('/9gag.com/upvote',postId);
+	ajax_get('/9gag.com/votes/'+postId, function(resultPoints) {
+		document.getElementById(postId).textContent=resultPoints;
+	});
 }
 
+function downvotePost(postId){
+	ajax_get_post('/9gag.com/downvote',postId);
+	ajax_get('/9gag.com/votes/'+postId, function(resultPoints) {
+		document.getElementById(postId).textContent=resultPoints;
+	});
+	
+}
 function openModel(postId){
 	ajax_get('/9gag.com/post/'+postId, function(post) {
 		 var title=document.getElementById("title");
@@ -66,7 +76,6 @@ function clickOutside(e){
     m.style.display ='none';
     }
  }
-
 
 var box=document.getElementsByClassName("col-sm-8 text-left")[0];
 

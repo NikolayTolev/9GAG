@@ -30,8 +30,7 @@ public class ApplicationController {
 	public String showMain(Model m, HttpSession session) {
 		try {
 			context.setAttribute("sections", SectionDAO.SECTION_DAO.getAll());
-			context.setAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
-			
+			m.addAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -6,9 +6,9 @@
 
 	<div class="col-sm-2 sidenav">
       <div class="well">
-        <iframe src="https://www.tutorialspoint.com/index.htm" style="border:none;"></iframe>
+        <p>ADS</p>
       </div>
       <div class="well">
-        <iframe src="https://www.tutorialspoint.com/index.htm" style="border:none;"></iframe>
+        <p>ADS</p>
       </div>
     </div>

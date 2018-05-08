@@ -7,8 +7,8 @@ var p=document.getElementsByClassName("upload-post")[0];
 var divUpload=document.getElementsByClassName("upload-model")[0];
 var imgUpload=document.getElementsByClassName("upload-img")[0];
 var videoUpload=document.getElementsByClassName("upload-video")[0];
-imgUpload.addEventListener("click",postUploadImage);
-videoUpload.addEventListener("click",postUploadVideo);
+imgUpload.addEventListener("click",postUpload);
+videoUpload.addEventListener("click",postUpload);
 closeBtn.addEventListener("click",closeModelPost);
 closeBtn2.addEventListener("click",closeModelPost);
 window.addEventListener('click',clickOutsidePost);
@@ -29,21 +29,12 @@ function clickOutsidePost(e){
     }
  }
 
-
-function postUploadVideo(e){
-	postUpload(true);
-}
-
-function postUploadImage(e){
-	postUpload(false);
-}
-function postUpload(isVideo){
-	if(isVideo){
+function postUpload(e){
+	if(e.class=="upload-video"){
 		document.getElementsByName("file")[0].setAttribute("accept" ,"video/*")
-		document.getElementById("typeRadio").value = "video";
+		
 	}else{
 		document.getElementsByName("file")[0].setAttribute("accept" ,"image/*")
-		document.getElementById("typeRadio").value = "image";
 	}
     p.style.display="none";
     divUpload.style.display="block";

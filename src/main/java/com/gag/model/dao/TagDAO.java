@@ -47,9 +47,9 @@ public enum TagDAO implements ITagDAO {
 	@Override
 	public List<Tag> getTagsCointainig(String chars) throws SQLException {
 		List<Tag> tags = new ArrayList<>();
-		String sql = "SELECT id, name FROM tags WHERE name LIKE '%?%'";
+		String sql = "SELECT id, name FROM tags WHERE name LIKE ? LIMIT 10;";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setString(1, chars);
+		ps.setString(1, "%"+chars+"%");
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			tags.add(new Tag(rs.getInt("id"), rs.getString("name")));

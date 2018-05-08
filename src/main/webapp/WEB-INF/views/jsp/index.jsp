@@ -30,15 +30,15 @@
 		    <h2 onclick="openModel(${post.id})">${post.title}  ${post.id} </h2>
 		    </div>
 		    <div>
-		    <img src="img/${post.imageURL}" onclick="openModel(${post.id})" style="max-width: 600px;">
+		    <img src="img/${post.imageURL}" width="300" height="400" onclick="openModel(${post.id})">
 		    </div>
-		    <div id="${post.id}" onclick="countPoints(${post.id})">
+		    <div id="${post.id}" onload="countPoints(${post.id})">
 		    click to see points
 		    </div>
 		    <div id="${post.id}+c"></div>
 		    <div class="tf">
                 <button class="L" onclick="upvotePost(${post.id})">L</button>
-                <button class="D">D</button>
+                <button class="D"  onclick="downvotePost(${post.id})">D</button>
                 <button class="C" onclick="openModel(${post.id})">C</button>
 		    </div>
 		 </tr>
@@ -62,7 +62,7 @@
 	         </div>
 	        <div class="left">
 	            <div class="content-post">
-	           		 <img  id="pic"> 
+	           		 <img  width="300" height="500" id="pic"> 
 	            </div>
 	            <div class="model-footer">
 	                <button class="L">L</button>
@@ -72,6 +72,57 @@
 	        </div>      
 	    </div>
     </div>
+    
+     <div class="model-upload-p" id="simpleModelPost">
+        <div class="upload-post">
+                <div class="upload-header">
+                   <span class="closeBtnPost">&times;</span>
+                    <h2> Upload a Post</h2>      
+                </div>
+                <div class="upload-img" > 
+                 <h3>Upload Image</h3>
+                 </div>    
+                 <div class="upload-video"> 
+                     <h3>Upload Video</h3>
+                </div>   
+        </div>
+        <div class="upload-model">
+                <div class="upload-header">
+                   <span class="closeBtnPost">&times;</span>
+                   <img src="" id="currentPhoto">
+                   <form method="post" action="upload/post" id="ajax-upload" enctype="multipart/form-data">
+                      <table>
+		                <tr style="text-align: left">
+		                 <td>File</td>
+		                 <td><input type="file" name="file" accept="" onchange="handleFile(this.files)" required></td>
+		                 </tr>
+		                <tr style="text-align: left">
+		                 <td>Description</td>
+		                 <td><textarea name="description" rows="5" colls="16" required></textarea></td>
+		                </tr>
+		                <tr style="text-align: left">
+		                 <td>Tag</td>
+		                 <td><input type="text" name="tag" required></td>
+		                </tr>
+		                <tr style="text-align: left">
+		                 <td>Section</td>
+		                 <td><select style="width: 179px; height: 30px" name="section" required>
+									<c:forEach var="section" items="${sections}">
+										<option value="${section.id}">${section.name}</option>
+									</c:forEach>
+							</select>
+						 </td>	
+						</tr>
+		                <tr style="text-align: left">
+		                <td></td>
+		                 <td><input type="submit" value="upload file"></td>
+		                </tr>
+		            </table>
+	             </form>
+                </div>       
+        </div>        
+    </div>
+          
 
 <footer class="container-fluid text-center">
   <p>Footer Text</p>
@@ -79,5 +130,6 @@
 
 <script src="<c:url value="/js/post.js" />"></script>
 <script src="<c:url value="/js/upload.js" />"></script>
+<script src="<c:url value="/js/search.js" />"></script>
 </body>
 </html>

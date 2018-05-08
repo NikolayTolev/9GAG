@@ -24,7 +24,7 @@ public enum PostDAO implements IPostDAO {
 	}
 
 	@Override
-	public List<Post> getPostsByTag(Tag... tags) throws Exception {
+	public List<Post> getPostsByTag(int... tags) throws Exception {
 		List<Post> posts = new ArrayList<>();
 		StringBuilder tagSQL = new StringBuilder();
 
@@ -36,11 +36,11 @@ public enum PostDAO implements IPostDAO {
 			}
 		}
 
-		String sql = "SELECT post_id FROM posts_have_tags WHERE tag_id IN (" + tagSQL + ") ORDER BY date DESC";
+		String sql = "SELECT post_id FROM posts_have_tags WHERE tag_id IN (" + tagSQL + ")";
 		PreparedStatement ps = con.prepareStatement(sql);
 
 		for (int i = 0; i < tags.length; i++) {
-			ps.setInt(i + 1, tags[i].getId());
+			ps.setInt(i + 1, tags[i]);
 		}
 
 		ResultSet rs = ps.executeQuery();
@@ -55,7 +55,7 @@ public enum PostDAO implements IPostDAO {
 	@Override
 	public List<Post> getPostsBySection(int sectionId) throws SQLException {
 		List<Post> posts = new ArrayList<>();
-		String sql = "SELECT id, image_url, title, date, user_id FROM posts WHERE section_id=? ORDER BY date DESC";
+		String sql = "SELECT id,image_url, title, date, user_id FROM posts WHERE section_id=? ORDER BY date DESC";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, sectionId);
 		ResultSet rs = ps.executeQuery();
@@ -95,7 +95,7 @@ public enum PostDAO implements IPostDAO {
 	@Override
 	public List<Post> getFreshPosts() throws SQLException {
 		List<Post> posts = new ArrayList<>();
-		String sql = "SELECT id, image_url, title, date, user_id FROM posts ORDER BY date DESC ";
+		String sql = "SELECT id,image_url, title, date, user_id FROM posts ORDER BY date DESC ";
 		Statement s = con.createStatement();
 		ResultSet rs = s.executeQuery(sql);
 
@@ -126,11 +126,11 @@ public enum PostDAO implements IPostDAO {
 
 	@Override
 	public void savePost(Post p) throws SQLException {
-		String sql = "INSERT INTO posts (image_url, title ,user_id, section_id) VALUES (?,?,?,?);";
+		String sql = "INSERT INTO posts (image_url,title,user_id,section_id) VALUES (?,?,?,?) ";
 		PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, p.getImageURL());
 		ps.setString(2, p.getTitle());
-		ps.setInt(3, p.getOwner().getId());
+		ps.setInt(3, 1);
 		ps.setInt(4, p.getSection().getId());
 		ps.executeUpdate();
 		ResultSet rs = ps.getGeneratedKeys();
@@ -147,6 +147,7 @@ public enum PostDAO implements IPostDAO {
 			System.out.println(p.getTags().get(i).getId());
 			ps.executeUpdate();
 		}
+
 	}
 
 	@Override
@@ -183,7 +184,6 @@ public enum PostDAO implements IPostDAO {
 		ps.setInt(2, userId);
 	    ResultSet rs=ps.executeQuery();
 	    if(!rs.next()) {
-	    	System.out.println("insert");
 	    	sql = "INSERT INTO posts_have_votes (user_id,post_id,vote) VALUES (?,?,?)";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, userId);
@@ -192,13 +192,16 @@ public enum PostDAO implements IPostDAO {
 			ps.executeUpdate();
 			return;
 	    }else if(rs.getInt("vote")==vote) {
-	    vote=-vote;
-	    }    
+	             return;
+	    }
+	    vote+=rs.getInt("vote");
 	    sql = "UPDATE posts_have_votes SET vote=? WHERE post_id=? AND user_id=?";
 		ps = con.prepareStatement(sql);
 		ps.setInt(1, vote);
 		ps.setInt(2, postId);
 		ps.setInt(3, userId);
+		ps.executeUpdate();
+		
 	}
 
 	@Override

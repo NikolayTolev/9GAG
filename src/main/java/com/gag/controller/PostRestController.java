@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gag.model.Post;
+import com.gag.model.Tag;
 import com.gag.model.User;
 import com.gag.model.dao.PostDAO;
 import com.gag.model.dao.SectionDAO;
+import com.gag.model.dao.TagDAO;
 
 @Controller
 public class PostRestController {
@@ -57,7 +59,7 @@ public class PostRestController {
 	@RequestMapping(value="/downvote",method = RequestMethod.POST)
 	public void downvote(@RequestParam int postId, HttpSession session) throws Exception {
         User user = (User) session.getAttribute("user");
-        PostDAO.POST_DAO.votePost(user.getId(), postId, -1);      
+        PostDAO.POST_DAO.votePost(user.getId(), postId, -1); 
     }
 	
 	@RequestMapping(value = "/votes/{postId}", method = RequestMethod.GET)
@@ -67,4 +69,21 @@ public class PostRestController {
 		System.out.println(PostDAO.POST_DAO.getAllVotes(postId));
 		return PostDAO.POST_DAO.getAllVotes(postId);
 	}
+	
+	@RequestMapping(value = "/tags/{text}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Tag> getPosts(@PathVariable String text) throws SQLException {
+		System.out.println("searche");
+		return TagDAO.TAG_DAO.getTagsCointainig(text);
+	}
+	
+	
+	@RequestMapping(value = "/tags/search/{tagId}", method = RequestMethod.GET)
+	public String getPostsByTags(@PathVariable int tagId, Model m) throws Exception {
+		m.addAttribute("posts", PostDAO.POST_DAO.getPostsByTag(tagId));
+		m.addAttribute("sections", SectionDAO.SECTION_DAO.getAll());
+		return "index";
+	}
+	
+	
 }
