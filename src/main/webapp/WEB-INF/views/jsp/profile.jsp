@@ -30,19 +30,19 @@
 	<div id="flip-tabs">
 		<ul id="flip-navigation">
 			<li class="profile-tab selected" onclick="selectPosts()" id="postsBtn">
-				<a href="posts/owner/${sessionScope.user.id}" id="tab-0" class="profile-tab">Posts</a>
+				<a id="tab-0" class="profile-tab">Posts</a>
 			</li>
 			<li class="profile-tab" id="votedBtn">
-				<a href="posts/voted/${sessionScope.user.id}" id="tab-1" onclick="selectVoted()" class="profile-tab">Voted</a>
+				<a id="tab-1" onclick="selectVoted()" class="profile-tab">Voted</a>
 			</li>
 			<li class="profile-tab" id="commentedBtn">
-				<a href="posts/commented/${sessionScope.user.id}" id="tab-2" onclick="selectCommented()" class="profile-tab">Commented</a>
+				<a id="tab-2" onclick="selectCommented()" class="profile-tab">Commented</a>
 			</li>
 		</ul>
 
 		<div id="flip-container" style="align-content: center;">
 			<div id="postsTab">
-				<c:forEach var="post" items="${posts}">
+				<c:forEach var="post" items="${sessionScope.posts}">
 						<tr class="post-content">
 							<div class="tp post-content">
 								<h2 onclick="openModel(${post.id})">${post.title}
@@ -85,8 +85,90 @@
 					</c:forEach>
 			</div>
 			<div id="votedTab" class="tab-hidden">
+			<c:forEach var="post" items="${sessionScope.voted}">
+						<tr class="post-content">
+							<div class="tp post-content">
+								<h2 onclick="openModel(${post.id})">${post.title}
+									${post.id}</h2>
+							</div>
+							<c:choose>
+								<c:when test="${post.video == true}">
+									<div>
+										<video width="500" height="420" controls> <source
+											src="img/${post.imageURL}" type="video/mp4"
+											onclick="openModel(${post.id})" style="max-width: 600px;">
+										<source src="img/${post.imageURL}" type="video/ogg"
+											onclick="openModel(${post.id})" style="max-width: 600px;">
+										Your browser does not support the video tag. </video>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div>
+										<img src="img/${post.imageURL}"
+											onclick="openModel(${post.id})" style="max-width: 600px;">
+									</div>
+									<br />
+								</c:otherwise>
+							</c:choose>
+							<div id="${post.id}" onclick="countPoints(${post.id})">
+								click to see points</div>
+							<div id="${post.id}+c"></div>
+							<div class="tf">
+								<button class="L mainButton" onclick="upvotePost(${post.id})">
+									<span class="glyphicon glyphicon-thumbs-up"></span>
+								</button>
+								<button class="D mainButton" onclick="downvotePost(${post.id})">
+									<span class="glyphicon glyphicon-thumbs-down"></span>
+								</button>
+								<button class="C mainButton" onclick="openModel(${post.id})">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</button>
+							</div>
+						</tr>
+					</c:forEach>
 			</div>
 			<div id="commentedTab" class="tab-hidden">
+			<c:forEach var="post" items="${sessionScope.commented}">
+						<tr class="post-content">
+							<div class="tp post-content">
+								<h2 onclick="openModel(${post.id})">${post.title}
+									${post.id}</h2>
+							</div>
+							<c:choose>
+								<c:when test="${post.video == true}">
+									<div>
+										<video width="500" height="420" controls> <source
+											src="img/${post.imageURL}" type="video/mp4"
+											onclick="openModel(${post.id})" style="max-width: 600px;">
+										<source src="img/${post.imageURL}" type="video/ogg"
+											onclick="openModel(${post.id})" style="max-width: 600px;">
+										Your browser does not support the video tag. </video>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div>
+										<img src="img/${post.imageURL}"
+											onclick="openModel(${post.id})" style="max-width: 600px;">
+									</div>
+									<br />
+								</c:otherwise>
+							</c:choose>
+							<div id="${post.id}" onclick="countPoints(${post.id})">
+								click to see points</div>
+							<div id="${post.id}+c"></div>
+							<div class="tf">
+								<button class="L mainButton" onclick="upvotePost(${post.id})">
+									<span class="glyphicon glyphicon-thumbs-up"></span>
+								</button>
+								<button class="D mainButton" onclick="downvotePost(${post.id})">
+									<span class="glyphicon glyphicon-thumbs-down"></span>
+								</button>
+								<button class="C mainButton" onclick="openModel(${post.id})">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</button>
+							</div>
+						</tr>
+					</c:forEach>
 			</div>
 		</div>
 	</div>
@@ -104,9 +186,6 @@
 				<div class="model-comments"></div>
 			</div>
 			<div class="left">
-				<div class="content-post">
-					<img id="pic" width="500" height="500" id="pic">
-				</div>
 				<div class="model-footer">
 					<button class="L mainButton" onclick="upvotePost(${post.id})">
 						<span class="glyphicon glyphicon-thumbs-up"></span>

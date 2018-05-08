@@ -79,7 +79,7 @@ public enum PostDAO implements IPostDAO {
 	@Override
 	public List<Post> getPostsByOwner(int userId) throws SQLException {
 		List<Post> posts = new ArrayList<>();
-		String sql = "SELECT id, image_url, title, date, user_id FROM posts WHERE user_id=? ORDER BY date DESC";
+		String sql = "SELECT id, image_url, title, date, user_id, is_video FROM posts WHERE user_id=? ORDER BY date DESC";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, userId);
 		ResultSet rs = ps.executeQuery();

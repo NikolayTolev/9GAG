@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.gag.model.Country;
 import com.gag.model.Gender;
 import com.gag.model.Post;
+import com.gag.model.User;
 import com.gag.model.dao.CountryDAO;
 import com.gag.model.dao.GenderDAO;
 import com.gag.model.dao.PostDAO;
@@ -84,8 +85,17 @@ public class ApplicationController {
 	}
 	
 	@RequestMapping(value="/profile", method= RequestMethod.GET)
-	public String showProfile() {
+	public String showProfile(HttpSession session) {
 		// show profile page
+		User user = (User)session.getAttribute("user");
+		try {
+			session.setAttribute("posts", PostDAO.POST_DAO.getPostsByOwner(user.getId()));
+			session.setAttribute("voted", PostDAO.POST_DAO.getVotedPosts(user.getId()));
+			session.setAttribute("commented", PostDAO.POST_DAO.getCommentedPosts(user.getId()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "profile";
 	}
 	

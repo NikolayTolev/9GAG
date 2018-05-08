@@ -49,39 +49,6 @@ public class PostRestController {
 		return "index";
 	}
 	
-	@RequestMapping(value = "/posts/owner/{ownerId}", method = RequestMethod.GET)
-	public String getPostsByOwner(@PathVariable("ownerId") int ownerId, Model m) {
-		try {
-			m.addAttribute("posts", PostDAO.POST_DAO.getPostsByOwner(ownerId));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "profile";
-	}
-	
-	@RequestMapping(value = "/posts/voted/{ownerId}", method = RequestMethod.GET)
-	public String getVotedPosts(@PathVariable("ownerId") int ownerId, Model m) {
-		try {
-			m.addAttribute("posts", PostDAO.POST_DAO.getVotedPosts(ownerId));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "profile";
-	}
-	
-	@RequestMapping(value = "/posts/commented/{ownerId}", method = RequestMethod.GET)
-	public String getCommentedPosts(@PathVariable("ownerId") int ownerId, Model m) {
-		try {
-			m.addAttribute("posts", PostDAO.POST_DAO.getCommentedPosts(ownerId));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "profile";
-	}
-	
 	@RequestMapping(value="/upvote",method = RequestMethod.POST)
 	public void upvote(@RequestParam int postId, HttpSession session, Model model) throws Exception {
 		if (session.getAttribute("user") == null) {

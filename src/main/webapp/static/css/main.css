@@ -150,3 +150,10 @@ a.dropdown-item{
 	height: auto !important;
   	overflow: visible !important;
 }
+
+#autocomplete-results {
+	position: absolute;
+    top: 30px;
+    display: flex;
+    flex-direction: column;
+}
