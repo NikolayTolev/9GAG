@@ -126,12 +126,13 @@ public enum PostDAO implements IPostDAO {
 
 	@Override
 	public void savePost(Post p) throws SQLException {
-		String sql = "INSERT INTO posts (image_url,title,user_id,section_id) VALUES (?,?,?,?) ";
+		String sql = "INSERT INTO posts (image_url, title, user_id, section_id, is_video) VALUES (?,?,?,?,?) ";
 		PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, p.getImageURL());
 		ps.setString(2, p.getTitle());
-		ps.setInt(3, 1);
+		ps.setInt(3, p.getOwner().getId());
 		ps.setInt(4, p.getSection().getId());
+		ps.setBoolean(5, p.isVideo());
 		ps.executeUpdate();
 		ResultSet rs = ps.getGeneratedKeys();
 		rs.next();

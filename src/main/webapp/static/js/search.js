@@ -31,7 +31,7 @@ input.addEventListener('keyup', function(e) {
     autocomplete_results.innerHTML = '';
     
     for (i = 0; i < tags.length; i++) {
-      autocomplete_results.innerHTML +='<div><a href="tags/search/'+tags[i].id+'">'+ tags[i].name +'</a></div>';
+      autocomplete_results.innerHTML +='<div class="form-control"><a href="tags/search/'+tags[i].id+'">'+ tags[i].name +'</a></div>';
     }
   } else {
     tags_to_show = [];

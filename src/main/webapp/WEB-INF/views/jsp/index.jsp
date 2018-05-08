@@ -75,13 +75,13 @@
 	           		 <img  id="pic"  width="500" height="500" id="pic"> 
 	            </div>
 	            <div class="model-footer">	            
-	                <button class="L">
+	                <button class="L mainButton" onclick="upvotePost(${post.id})">
 	                	<span class="glyphicon glyphicon-thumbs-up"></span>
 	                </button>	               	                
-	                <button class="D">
+	                <button class="D mainButton"  onclick="downvotePost(${post.id})">
 	                	<span class="glyphicon glyphicon-thumbs-down"></span>
 	                </button>	               	                
-	                <button class="C">
+	                <button class="C mainButton" onclick="openModel(${post.id})">
 	                	<span class="glyphicon glyphicon-pencil"></span>
 	                </button>	                
 	            </div>

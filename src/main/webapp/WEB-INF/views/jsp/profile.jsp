@@ -38,8 +38,7 @@
 				<a href="javascript://" id="tab-0" class="profile-tab">Posts</a>
 			</li>
 			<li class="profile-tab" id="votedBtn">
-				<a href="javascript://" id="tab-1" onclick="selectVoted()" class="profile-tab">Voted
-			</a>
+				<a href="javascript://" id="tab-1" onclick="selectVoted()" class="profile-tab">Voted</a>
 			</li>
 			<li class="profile-tab" id="commentedBtn">
 				<a href="javascript://" id="tab-2" onclick="selectCommented()" class="profile-tab">Commented</a>

@@ -28,7 +28,7 @@
 					class="glyphicon glyphicon-film"></span></a></li>
 			<form class="navbar-form navbar-left" action="/action_page.php">
 				<div class="input-group">
-					<input type="text" class="form-control" id="search"
+					<input type="text" class="form-control" id="search" autocomplete="off"
 						placeholder="Search">
 					<div id="autocomplete-results"></div>
 					<div class="input-group-btn">

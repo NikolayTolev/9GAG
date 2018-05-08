@@ -38,7 +38,6 @@ public class FileController {
 	@Autowired 
     ServletContext application;
 	private static final String FILE_PATH = "C:\\Users\\HP\\Desktop\\uploads\\";
-	private static final String RANDOMS_PATH = FILE_PATH + "random\\";
 
 	@RequestMapping(value="/upload/post", method=RequestMethod.POST)
 	public String saveImage(Model m, HttpSession session, @RequestParam("file") MultipartFile uploadedFile,
@@ -49,7 +48,8 @@ public class FileController {
 //		String extension = FilenameUtils.getExtension(uploadedFile.getOriginalFilename());
 		String fileName = "9gag-"+uploadedFile.getOriginalFilename();
 		File serverFile = new File(FILE_PATH + fileName);
-		Files.copy(uploadedFile.getInputStream(), serverFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//		Files.copy(uploadedFile.getInputStream(), serverFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		uploadedFile.transferTo(serverFile);
 		m.addAttribute("filename", fileName);
 		Post p=new Post((User)session.getAttribute("user"));
 		p.imageURL(fileName);
@@ -67,7 +67,7 @@ public class FileController {
 		}
 		p.title(description);
 		p.addTags(g);
-		List<Section> sections = (List<Section>)application.getAttribute("sections");
+		List<Section> sections = (List<Section>) application.getAttribute("sections");
         for(Section section :  sections){
         	if(section.getId()==sec) {
         		p.section(section);
@@ -94,10 +94,5 @@ public class FileController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	@RequestMapping(value="/randomize", method= RequestMethod.GET)
-	public void showRandPics() {
-		
 	}
 }
