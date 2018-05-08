@@ -16,6 +16,7 @@ public class Post {
 	private String imageURL;
 	private LocalDateTime date;
 	private String title;
+	private boolean isVideo;
 	private List<Tag> tags;
 	private List<Comment> comments;
 
@@ -45,6 +46,11 @@ public class Post {
 		return this;
 	}
 
+	public Post isVideo(boolean isVideo) {
+		this.isVideo = isVideo;
+		return this;
+	}
+	
 	public Post imageURL(String imageURL) {
 		this.imageURL = imageURL;
 		return this;
@@ -81,6 +87,10 @@ public class Post {
 
 	public void deleteComment(Comment c) {
 		this.comments.remove(c);
+	}
+
+	public boolean isVideo() {
+		return isVideo;
 	}
 
 	public void addTags(Tag... tags) {

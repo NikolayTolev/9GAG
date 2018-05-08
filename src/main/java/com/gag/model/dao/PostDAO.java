@@ -213,6 +213,22 @@ public enum PostDAO implements IPostDAO {
 		return rs.next()? rs.getInt("votes"):0;	
 	}
 	
-	
+	@Override
+	public List<Post> getVideos() throws Exception {
+		List<Post> videos = new ArrayList<>();
+		String sql = "SELECT id, image_url, title, date, user_id FROM posts WHERE is_video=1 ORDER BY date DESC ";
+		Statement s = con.createStatement();
+		ResultSet rs = s.executeQuery(sql);
+		while (rs.next()) {
+			User owner = UserDAO.USER_DAO.getUserById(rs.getInt("user_id"));
+			Post p = new Post(owner)
+					.id(rs.getInt("id"))
+					.imageURL(rs.getString("image_url"))
+					.title(rs.getString("title"))
+					.date(rs.getTimestamp("date").toLocalDateTime());
+			videos.add(p);
+		}
+		return videos;
+	}
 
 }

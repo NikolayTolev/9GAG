@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="css/login.css">
 <title>Login</title>
 </head>
 <body>
@@ -18,19 +19,20 @@
     <div class="col-sm-8 text-center"> 
       <h5 style="color: red"><i>${error}</i></h5>
       <h5 style="color: blue"><i>${success}</i></h5>
-		<h1>Login</h1>
+      
+		<div class="table-title">Login</div>
 		<form action="login" method="post">
-			<table align="center">
-			<tr>
-				<td><i>Username&nbsp;</i></td>
+			<table align="center" class="login-table">
+			<tr class="table-row">
+				<td>Username&nbsp;</td>
 				<td><input type="text" name="username"/></td>
 			</tr>
-			<tr>
-				<td><i>Password&nbsp;</i></td>
+			<tr class="table-row">
+				<td>Password&nbsp;</td>
 				<td><input type="password" name="password"/></td>
 			</tr>
-			<tr>
-				<td><input type="submit" value="Login"></td>
+			<tr class="table-row">
+				<td class="login-button"><input type="submit" value="Login"></td>
 			</tr>
 		</table>
 		Don't have an account? <a href="showRegister">&nbsp;Register here</a>
@@ -40,8 +42,5 @@
   </div>
 </div>
 
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
-</footer>
 </body>
 </html>

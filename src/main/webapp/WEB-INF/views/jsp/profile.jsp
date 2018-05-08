@@ -26,17 +26,26 @@
 			<div class="col-sm-8 text-left"> 
 				<div class="flex-row">
 					<div class="flex-1"></div>
-				   <img src="img/${sessionScope.user.photo}"/>
+				   <img src="img/${sessionScope.user.photo}" style="width: 100px; height: 100px; margin: 20px;"/>
 				   
-					<div>${sessionScope.user.username}</div>
+					<div><h2>${sessionScope.user.username}</h2></div>
 					<div class="flex-1"></div>
 				</div>
+		
 	<div id="flip-tabs">
 		<ul id="flip-navigation">
-			<li class="selected" onclick="selectPosts()" id="postsBtn"><a href="javascript://" id="tab-0">Posts</a></li>
-			<li id="votedBtn"><a href="javascript://" id="tab-1" onclick="selectVoted()">Voted</a></li>
-			<li id="commentedBtn"><a href="javascript://" id="tab-2" onclick="selectCommented()">Commented</a></li>
+			<li class="profile-tab selected" onclick="selectPosts()" id="postsBtn">
+				<a href="javascript://" id="tab-0" class="profile-tab">Posts</a>
+			</li>
+			<li class="profile-tab" id="votedBtn">
+				<a href="javascript://" id="tab-1" onclick="selectVoted()" class="profile-tab">Voted
+			</a>
+			</li>
+			<li class="profile-tab" id="commentedBtn">
+				<a href="javascript://" id="tab-2" onclick="selectCommented()" class="profile-tab">Commented</a>
+			</li>
 		</ul>
+
 		<div id="flip-container">
 			<div id="postsTab">
 			</div>
@@ -51,12 +60,5 @@
 		</div>
 	</div>
 	
-	
-	<!-- 
-	
-	 -->
-	<footer class="container-fluid text-center">
-	<p>Footer Text</p>
-	</footer>
 </body>
 </html>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.gag.model.Country;
 import com.gag.model.Gender;
+import com.gag.model.Post;
 import com.gag.model.dao.CountryDAO;
 import com.gag.model.dao.GenderDAO;
 import com.gag.model.dao.PostDAO;
@@ -30,7 +31,8 @@ public class ApplicationController {
 	public String showMain(Model m, HttpSession session) {
 		try {
 			context.setAttribute("sections", SectionDAO.SECTION_DAO.getAll());
-			m.addAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
+			context.setAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,5 +87,17 @@ public class ApplicationController {
 	public String showProfile() {
 		// show profile page
 		return "profile";
+	}
+	
+	@RequestMapping(value="/videos", method=RequestMethod.GET)
+	public String showVideos(Model model) {
+		try {
+			List<Post> videos = PostDAO.POST_DAO.getVideos();
+			model.addAttribute("videos", videos);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "videos";
 	}
 }

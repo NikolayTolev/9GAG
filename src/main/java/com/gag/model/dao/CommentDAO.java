@@ -23,7 +23,7 @@ public enum CommentDAO implements ICommentDAO {
 
 	@Override
 	public Comment getCommentById(int id) throws Exception {
-		String sql="SELECT id, date, content, user_id, post_id, comment_id FROM comments WHERE id =? ";
+		String sql="SELECT id, date, content, user_id, post_id, parent_id FROM comments WHERE id =? ";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, id);
 		ResultSet rs = ps.executeQuery();
@@ -55,7 +55,7 @@ public enum CommentDAO implements ICommentDAO {
 
 	@Override
 	public void saveSubComment(Comment parent, Comment child) throws SQLException {
-		String sql = "INSERT INTO comments (content, user_id, post_id, comment_id) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO comments (content, user_id, post_id, parent_id) VALUES (?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, child.getContent());
 		ps.setInt(2, child.getOwner().getId());
@@ -76,7 +76,7 @@ public enum CommentDAO implements ICommentDAO {
 
 	@Override
 	public List<Comment> getCommentsByPost(Post post) throws Exception {
-		String sql = "SELECT id, date, content, user_id, post_id, comment_id FROM comments WHERE post_id=?;";
+		String sql = "SELECT id, date, content, user_id, post_id, parentt_id FROM comments WHERE post_id=?;";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, post.getId());
 		ResultSet rs = ps.executeQuery();
@@ -101,8 +101,8 @@ public enum CommentDAO implements ICommentDAO {
 
 	@Override
 	public List<Comment> getCommentsByComment(Comment comment) throws Exception {
-		String sql = "SELECT c.id, c.date, c.content, c.user_id, c.post_id, c.comment_id FROM comments c"
-					 + "JOIN comment p ON (c.comment_id = p.id) WHERE p.id = ?;";
+		String sql = "SELECT c.id, c.date, c.content, c.user_id, c.post_id, c.parent_id FROM comments c"
+					 + "JOIN comments p ON (c.parent_id = p.id) WHERE p.id = ?;";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, comment.getId());
 		ResultSet rs = ps.executeQuery();

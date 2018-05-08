@@ -3,8 +3,8 @@ package com.gag.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
+import scala.util.Random;
 
 public class User {
 

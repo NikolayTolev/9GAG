@@ -14,6 +14,9 @@ public interface IPostDAO {
 	Collection<Post> getPostsByTag(int... tags) throws Exception;
 
 	Collection<Post> getPostsBySection(int sectionId) throws Exception;
+	
+	Collection<Post> getVideos() throws Exception;
+
 
 	Collection<Post> getPostsByOwner(int userId) throws Exception;
 

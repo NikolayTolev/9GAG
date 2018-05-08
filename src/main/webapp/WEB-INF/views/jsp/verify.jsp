@@ -38,10 +38,6 @@
 		</div>
 	</div>
 
-	<footer class="container-fluid text-center">
-	<p>Footer Text</p>
-	</footer>
-
 	<script src="<c:url value="/js/post.js" />"></script>
 </body>
 </html>
