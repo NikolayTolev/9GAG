@@ -38,11 +38,10 @@ public class PostRestController {
 		return p;
 	}
 
-	@RequestMapping(value = "/{sectionId}", method = RequestMethod.GET)
-	public String getPostsBySection(@PathVariable int sectionId, Model m) {
+	@RequestMapping(value = "/posts/section/{sectionId}", method = RequestMethod.GET)
+	public String getPostsBySection(@PathVariable("sectionId") String sectionId, Model m) {
 		try {
-			m.addAttribute("posts", PostDAO.POST_DAO.getPostsBySection(sectionId));
-			m.addAttribute("sections", SectionDAO.SECTION_DAO.getAll());
+			m.addAttribute("posts", PostDAO.POST_DAO.getPostsBySection(Integer.parseInt(sectionId)));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,14 +49,53 @@ public class PostRestController {
 		return "index";
 	}
 	
+	@RequestMapping(value = "/posts/owner/{ownerId}", method = RequestMethod.GET)
+	public String getPostsByOwner(@PathVariable("ownerId") int ownerId, Model m) {
+		try {
+			m.addAttribute("posts", PostDAO.POST_DAO.getPostsByOwner(ownerId));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "profile";
+	}
+	
+	@RequestMapping(value = "/posts/voted/{ownerId}", method = RequestMethod.GET)
+	public String getVotedPosts(@PathVariable("ownerId") int ownerId, Model m) {
+		try {
+			m.addAttribute("posts", PostDAO.POST_DAO.getVotedPosts(ownerId));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "profile";
+	}
+	
+	@RequestMapping(value = "/posts/commented/{ownerId}", method = RequestMethod.GET)
+	public String getCommentedPosts(@PathVariable("ownerId") int ownerId, Model m) {
+		try {
+			m.addAttribute("posts", PostDAO.POST_DAO.getCommentedPosts(ownerId));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "profile";
+	}
+	
 	@RequestMapping(value="/upvote",method = RequestMethod.POST)
-	public void upvote(@RequestParam int postId, HttpSession session) throws Exception {
+	public void upvote(@RequestParam int postId, HttpSession session, Model model) throws Exception {
+		if (session.getAttribute("user") == null) {
+			return;
+		}
         User user = (User) session.getAttribute("user");
         PostDAO.POST_DAO.votePost(user.getId(), postId, 1);      
     }
 	
 	@RequestMapping(value="/downvote",method = RequestMethod.POST)
-	public void downvote(@RequestParam int postId, HttpSession session) throws Exception {
+	public void downvote(@RequestParam int postId, HttpSession session, Model model) throws Exception {
+		if (session.getAttribute("user") == null) {
+			return ;
+		}
         User user = (User) session.getAttribute("user");
         PostDAO.POST_DAO.votePost(user.getId(), postId, -1); 
     }

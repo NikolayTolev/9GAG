@@ -55,7 +55,7 @@ public enum PostDAO implements IPostDAO {
 	@Override
 	public List<Post> getPostsBySection(int sectionId) throws SQLException {
 		List<Post> posts = new ArrayList<>();
-		String sql = "SELECT id,image_url, title, date, user_id FROM posts WHERE section_id=? ORDER BY date DESC";
+		String sql = "SELECT id,image_url, title, date, user_id, is_video FROM posts WHERE section_id=? ORDER BY date DESC";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, sectionId);
 		ResultSet rs = ps.executeQuery();
@@ -67,7 +67,9 @@ public enum PostDAO implements IPostDAO {
 					.imageURL(rs.getString("image_url"))
 					.title(rs.getString("title"))
 					.date(rs.getTimestamp("date")
-					.toLocalDateTime());
+					.toLocalDateTime())
+					.video(rs.getBoolean("is_video"))
+					.id(rs.getInt("id"));
 			posts.add(p);
 		}
 
@@ -77,7 +79,7 @@ public enum PostDAO implements IPostDAO {
 	@Override
 	public List<Post> getPostsByOwner(int userId) throws SQLException {
 		List<Post> posts = new ArrayList<>();
-		String sql = "SELECT image_url, title, date, user_id FROM posts WHERE user_id=? ORDER BY date DESC";
+		String sql = "SELECT id, image_url, title, date, user_id FROM posts WHERE user_id=? ORDER BY date DESC";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, userId);
 		ResultSet rs = ps.executeQuery();
@@ -85,7 +87,53 @@ public enum PostDAO implements IPostDAO {
 		while (rs.next()) {
 			User owner = UserDAO.USER_DAO.getUserById(rs.getInt("user_id"));
 			Post p = new Post(owner).imageURL(rs.getString("image_url")).title(rs.getString("title"))
-					.date(rs.getTimestamp("date").toLocalDateTime());
+					.date(rs.getTimestamp("date").toLocalDateTime())
+					.video(rs.getBoolean("is_video"))
+					.id(rs.getInt("id"));
+			posts.add(p);
+		}
+
+		return posts;
+	}
+	
+	@Override
+	public List<Post> getCommentedPosts(int userId) throws SQLException {
+		List<Post> posts = new ArrayList<>();
+		String sql = "SELECT p.id, p.image_url, p.title, p.date, p.user_id, p.section_id, p.is_video FROM posts p"
+					+ " JOIN comments c ON (c.post_id = p.id and c.user_id = p.user_id) WHERE p.user_id=?;";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+
+		while (rs.next()) {
+			User owner = UserDAO.USER_DAO.getUserById(rs.getInt("user_id"));
+			Post p = new Post(owner).imageURL(rs.getString("image_url")).title(rs.getString("title"))
+					.date(rs.getTimestamp("date").toLocalDateTime())
+					.video(rs.getBoolean("is_video"))
+					.id(rs.getInt("p.id"));
+			posts.add(p);
+		}
+
+		return posts;
+	}
+	
+	@Override
+	public List<Post> getVotedPosts(int userId) throws SQLException {
+		List<Post> posts = new ArrayList<>();
+		String sql = "SELECT p.id, p.image_url, p.title, p.date, p.user_id, p.section_id, p.is_video FROM posts p "
+					+ "JOIN posts_have_votes pv ON (p.id = pv.post_id)  WHERE pv.user_id=?;";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+
+		while (rs.next()) {
+			User owner = UserDAO.USER_DAO.getUserById(rs.getInt("user_id"));
+			Post p = new Post(owner)
+					.imageURL(rs.getString("image_url"))
+					.title(rs.getString("title"))
+					.date(rs.getTimestamp("date").toLocalDateTime())
+					.video(rs.getBoolean("is_video"))
+					.id(rs.getInt("p.id"));
 			posts.add(p);
 		}
 
@@ -95,7 +143,7 @@ public enum PostDAO implements IPostDAO {
 	@Override
 	public List<Post> getFreshPosts() throws SQLException {
 		List<Post> posts = new ArrayList<>();
-		String sql = "SELECT id,image_url, title, date, user_id FROM posts ORDER BY date DESC ";
+		String sql = "SELECT id,image_url, title, date, user_id, is_video FROM posts ORDER BY date DESC ";
 		Statement s = con.createStatement();
 		ResultSet rs = s.executeQuery(sql);
 
@@ -105,7 +153,8 @@ public enum PostDAO implements IPostDAO {
 					.id(rs.getInt("id"))
 					.imageURL(rs.getString("image_url"))
 					.title(rs.getString("title"))
-					.date(rs.getTimestamp("date").toLocalDateTime());
+					.date(rs.getTimestamp("date").toLocalDateTime())
+					.video(rs.getBoolean("is_video"));
 			posts.add(p);
 		}
 
@@ -132,7 +181,7 @@ public enum PostDAO implements IPostDAO {
 		ps.setString(2, p.getTitle());
 		ps.setInt(3, p.getOwner().getId());
 		ps.setInt(4, p.getSection().getId());
-		ps.setBoolean(5, p.isVideo());
+		ps.setBoolean(5, p.getVideo());
 		ps.executeUpdate();
 		ResultSet rs = ps.getGeneratedKeys();
 		rs.next();
@@ -162,7 +211,7 @@ public enum PostDAO implements IPostDAO {
 	@Override
 	public Post getPostsById(int postId) throws SQLException {
 		System.out.println(postId);
-		String sql = "SELECT image_url, title, date, user_id FROM posts WHERE id=? ";
+		String sql = "SELECT image_url, title, date, user_id, is_video FROM posts WHERE id=? ";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, postId);
 		ResultSet rs = ps.executeQuery();
@@ -171,7 +220,9 @@ public enum PostDAO implements IPostDAO {
 		Post p = new Post(owner)
 				.imageURL(rs.getString("image_url"))
 				.title(rs.getString("title"))
-				.date(rs.getTimestamp("date").toLocalDateTime());
+				.date(rs.getTimestamp("date").toLocalDateTime())
+				.video(rs.getBoolean("is_video"))
+				.id(postId);
 		        //.comments(CommentDAO.COMMENT_DAO.getCommentsByPost(postId));
 		return p;
 	}

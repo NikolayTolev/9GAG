@@ -9,10 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <title>Settings</title>
 </head>
 <body>
@@ -36,7 +33,7 @@
 							<td rowspan="2">
 								<div align="center">
 									<img src="img/${sessionScope.user.photo}"
-										style="width: 200px; height: 200px">
+										style="width: 150px; height: 150px; border-radius: 50%">
 								</div>
 							</td>
 							<td style="padding: 10%"></td>
@@ -104,5 +101,9 @@
 			<c:import url="right-sidebar.jsp"></c:import>
 		</div>
 	</div>
+	<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

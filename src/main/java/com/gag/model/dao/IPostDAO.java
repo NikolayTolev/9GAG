@@ -1,6 +1,8 @@
 package com.gag.model.dao;
 
+import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 import com.gag.model.Post;
 import com.gag.model.Section;
@@ -17,6 +19,9 @@ public interface IPostDAO {
 	
 	Collection<Post> getVideos() throws Exception;
 
+	Collection<Post> getCommentedPosts(int userId) throws SQLException;
+	
+	Collection<Post> getVotedPosts(int userId) throws SQLException;
 
 	Collection<Post> getPostsByOwner(int userId) throws Exception;
 

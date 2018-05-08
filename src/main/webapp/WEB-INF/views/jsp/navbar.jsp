@@ -4,10 +4,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/index.css">
-<link rel="stylesheet" href="css/upload.css">
-
+<link href="<c:url value="/css/main.css" />" rel="stylesheet">
+<link href="<c:url value="/css/index.css" />" rel="stylesheet">
+<link href="<c:url value="/css/upload.css" />" rel="stylesheet">
 
 <nav class="navbar navbar-inverse">
 <div class="container-fluid">

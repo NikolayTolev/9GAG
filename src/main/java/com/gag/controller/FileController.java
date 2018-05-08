@@ -46,7 +46,8 @@ public class FileController {
 			                         @RequestParam("tag") String tag,
 			                         @RequestParam("section") int sec) throws IOException {
 //		String extension = FilenameUtils.getExtension(uploadedFile.getOriginalFilename());
-		String fileName = "9gag-"+uploadedFile.getOriginalFilename();
+		
+		String fileName = "9gag-"+ ((User)session.getAttribute("user")).getUsername() + uploadedFile.getOriginalFilename();
 		File serverFile = new File(FILE_PATH + fileName);
 //		Files.copy(uploadedFile.getInputStream(), serverFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		uploadedFile.transferTo(serverFile);
@@ -54,9 +55,9 @@ public class FileController {
 		Post p=new Post((User)session.getAttribute("user"));
 		p.imageURL(fileName);
 		if (type.equals("video")) {
-			p.isVideo(true);
+			p.video(true);
 		} else {
-			p.isVideo(false);
+			p.video(false);
 		}
 		Tag g =new Tag(tag);
 		try {
