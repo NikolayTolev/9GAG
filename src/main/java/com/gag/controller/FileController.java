@@ -37,7 +37,7 @@ public class FileController {
 	
 	@Autowired 
     ServletContext application;
-	private static final String FILE_PATH = "C:\\Users\\HP\\Desktop\\uploads\\";
+	private static final String FILE_PATH = "C:\\Users\\User1\\Desktop\\uploads\\";
 
 	@RequestMapping(value="/upload/post", method=RequestMethod.POST)
 	public String saveImage(Model m, HttpSession session, @RequestParam("file") MultipartFile uploadedFile,

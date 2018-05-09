@@ -9,20 +9,18 @@ public class Comment {
 
 	private int id;
 	private User owner;
-	private Post post;
 	private Date date;
 	private String content;
 	private List<Comment> replies;
 	
-	public Comment(Post post, User user, String content) {
+	public Comment( User user, String content) {
 		this.owner=user;
-		this.post = post;
 		this.content=content;
 		this.replies=new ArrayList<>();
 	}
 
-	public Comment(int id, Date date, Post post, User user, String content) {
-		this(post, user, content);
+	public Comment(int id, Date date, User user, String content) {
+		this( user, content);
 		this.id = id;
 		this.date = date;
 	}
@@ -59,9 +57,6 @@ public class Comment {
 		this.replies.add(c);
 	}
 	
-	public Post getPost() {
-		return post;
-	}
 
 	public Date getDate() {
 		return date;

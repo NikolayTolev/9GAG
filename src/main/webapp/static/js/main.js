@@ -2,7 +2,6 @@
 var model=document.getElementById('1');
 
 //get the open model button
-
 var modelBtn=document.getElementById('content');
 
 //get close button

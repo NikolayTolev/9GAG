@@ -50,21 +50,21 @@ public class PostRestController {
 	}
 	
 	@RequestMapping(value="/upvote",method = RequestMethod.POST)
-	public void upvote(@RequestParam int postId, HttpSession session, Model model) throws Exception {
+	public void upvote(@RequestParam int id, HttpSession session, Model model) throws Exception {
 		if (session.getAttribute("user") == null) {
 			return;
 		}
         User user = (User) session.getAttribute("user");
-        PostDAO.POST_DAO.votePost(user.getId(), postId, 1);      
+        PostDAO.POST_DAO.votePost(user.getId(), id, 1);      
     }
 	
 	@RequestMapping(value="/downvote",method = RequestMethod.POST)
-	public void downvote(@RequestParam int postId, HttpSession session, Model model) throws Exception {
+	public void downvote(@RequestParam int id, HttpSession session, Model model) throws Exception {
 		if (session.getAttribute("user") == null) {
 			return ;
 		}
         User user = (User) session.getAttribute("user");
-        PostDAO.POST_DAO.votePost(user.getId(), postId, -1); 
+        PostDAO.POST_DAO.votePost(user.getId(), id, -1); 
     }
 	
 	@RequestMapping(value = "/votes/{postId}", method = RequestMethod.GET)
@@ -90,5 +90,16 @@ public class PostRestController {
 		return "index";
 	}
 	
+	@RequestMapping(value="/post/delete",method = RequestMethod.POST)
+	public void upvote(@RequestParam int id, HttpSession session) throws Exception {
+		if (session.getAttribute("user") == null) {
+			return;
+		}
+		Post p = PostDAO.POST_DAO.getPostsById(id);
+        User user = (User) session.getAttribute("user");
+        if(p.getOwner().getId()==user.getId()) {
+        	PostDAO.POST_DAO.deletePost(p);
+        }
+    }
 	
 }

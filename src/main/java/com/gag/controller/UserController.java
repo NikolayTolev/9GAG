@@ -122,7 +122,7 @@ public class UserController {
 			session.invalidate();
 			return "index";
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			model.addAttribute("error", e.getMessage());
 			return "login";
 		}

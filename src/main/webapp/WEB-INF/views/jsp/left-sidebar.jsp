@@ -7,6 +7,6 @@
    <div class="col-sm-2 sidenav-left">
    	<div id="nav-title">Sections</div>
      <c:forEach var="section" items="${sections}">
-       <div class="nav-item"><a href="posts/section/${section.id}" style="color:white;">${section.name}</a></div>
+       <div class="nav-item"><a href="/9gag.com/posts/section/${section.id}" style="color:white;">${section.name}</a></div>
      </c:forEach>
    </div>

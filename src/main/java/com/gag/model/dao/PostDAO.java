@@ -72,7 +72,8 @@ public enum PostDAO implements IPostDAO {
 					.id(rs.getInt("id"));
 			posts.add(p);
 		}
-
+        ps.close();
+        rs.close();
 		return posts;
 	}
 
@@ -113,7 +114,8 @@ public enum PostDAO implements IPostDAO {
 					.id(rs.getInt("p.id"));
 			posts.add(p);
 		}
-
+        ps.close();
+        rs.close();
 		return posts;
 	}
 	
@@ -136,7 +138,8 @@ public enum PostDAO implements IPostDAO {
 					.id(rs.getInt("p.id"));
 			posts.add(p);
 		}
-
+		 ps.close();
+	     rs.close();
 		return posts;
 	}
 
@@ -158,6 +161,7 @@ public enum PostDAO implements IPostDAO {
 			posts.add(p);
 		}
 
+	    rs.close();
 		return posts;
 	}
 
@@ -197,7 +201,8 @@ public enum PostDAO implements IPostDAO {
 			System.out.println(p.getTags().get(i).getId());
 			ps.executeUpdate();
 		}
-
+		 ps.close();
+	     rs.close();
 	}
 
 	@Override
@@ -222,8 +227,10 @@ public enum PostDAO implements IPostDAO {
 				.title(rs.getString("title"))
 				.date(rs.getTimestamp("date").toLocalDateTime())
 				.video(rs.getBoolean("is_video"))
-				.id(postId);
-		        //.comments(CommentDAO.COMMENT_DAO.getCommentsByPost(postId));
+				.id(postId)
+		        .comments(CommentDAO.COMMENT_DAO.getCommentsByPost(postId));
+		ps.close();
+		rs.close();
 		return p;
 	}
 
@@ -253,6 +260,8 @@ public enum PostDAO implements IPostDAO {
 		ps.setInt(2, postId);
 		ps.setInt(3, userId);
 		ps.executeUpdate();
+		ps.close();
+		rs.close();
 		
 	}
 

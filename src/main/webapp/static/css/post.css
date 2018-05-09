@@ -73,6 +73,7 @@ body{
 
 .model-comments{
     background-color: rgb(224, 224, 224);
+    resize: none;
     margin: auto;
     width: 100%;
     height:8%

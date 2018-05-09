@@ -88,14 +88,13 @@ public class ApplicationController {
 	public String showProfile(HttpSession session) {
 		// show profile page
 		User user = (User)session.getAttribute("user");
-		try {
-			session.setAttribute("posts", PostDAO.POST_DAO.getPostsByOwner(user.getId()));
-			session.setAttribute("voted", PostDAO.POST_DAO.getVotedPosts(user.getId()));
-			session.setAttribute("commented", PostDAO.POST_DAO.getCommentedPosts(user.getId()));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				try {
+					session.setAttribute("posts", PostDAO.POST_DAO.getPostsByOwner(user.getId()));
+					session.setAttribute("voted", PostDAO.POST_DAO.getVotedPosts(user.getId()));
+					session.setAttribute("commented", PostDAO.POST_DAO.getCommentedPosts(user.getId()));
+				} catch (SQLException e) {
+                   System.out.println(e.getMessage());
+				}
 		return "profile";
 	}
 	
