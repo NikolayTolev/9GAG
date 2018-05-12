@@ -35,7 +35,7 @@ public class ApplicationController {
 			context.setAttribute("posts",  PostDAO.POST_DAO.getFreshPosts());
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return "index";
@@ -104,7 +104,7 @@ public class ApplicationController {
 			List<Post> videos = PostDAO.POST_DAO.getVideos();
 			model.addAttribute("videos", videos);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return "videos";

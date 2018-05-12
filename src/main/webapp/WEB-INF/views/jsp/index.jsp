@@ -29,8 +29,7 @@
 					<c:forEach var="post" items="${posts}">
 						<tr class="post-content">
 							<div class="tp post-content">
-								<h2 onclick="openModel(${post.id})">${post.title}
-									${post.id}</h2>
+								<h2 onclick="openModel(${post.id})">${post.title}</h2>
 							</div>
 							<c:choose>
 								<c:when test="${post.video == true}">

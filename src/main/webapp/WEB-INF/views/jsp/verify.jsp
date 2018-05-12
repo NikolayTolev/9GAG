@@ -19,16 +19,45 @@
 		<div class="row content">
 			<c:import url="left-sidebar.jsp"></c:import>
 			<div class="col-sm-8 text-center">
+
+				<div style="padding-left: 40%; padding-top: 15%">
 				<h5 style="color: red">
 					<i>${error}</i>
 				</h5>
-				<form action="activate" method="post">
-					<label><b>Insert username here:</b></label>
-					<input type="text" name="username"><br />
-					<label><b>Insert the code here:</b></label>
-					<input type="text" name="code">
-					<input type="submit" value="Submit">
-				</form>
+					<form class="form-horizontal" action="activate" method="post">
+						<fieldset>
+
+							<!-- Form Name -->
+							<legend><h2>Activate account</h2></legend>
+
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="textinput">Enter&nbsp;username:&nbsp;</label>
+								<div class="col-md-4">
+									<input id="textinput" type="text" placeholder="Username"
+										class="form-control input-md" name="username">
+								</div>
+							</div>
+
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="textinput">Enter&nbsp;code:&nbsp;</label>
+								<div class="col-md-4">
+									<input id="textinput" type="text" placeholder="Activation code"
+										class="form-control input-md" name="code">
+								</div>
+							</div>
+
+							<!-- Button -->
+							<div class="form-group">
+								<div class="col-md-8" style="padding-left: 36%">
+									<button id="btnsave" name="btnsave" class="btn btn-success">Activate</button>
+								</div>
+							</div>
+
+						</fieldset>
+					</form>
+				</div>
 			</div>
 			<c:import url="right-sidebar.jsp"></c:import>
 		</div>

@@ -166,18 +166,6 @@ public enum PostDAO implements IPostDAO {
 	}
 
 	@Override
-	public List<Post> getHotPost() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Post> getTrendingPost() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void savePost(Post p) throws SQLException {
 		String sql = "INSERT INTO posts (image_url, title, user_id, section_id, is_video) VALUES (?,?,?,?,?) ";
 		PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

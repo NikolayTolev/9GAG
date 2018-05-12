@@ -26,11 +26,7 @@ public interface IPostDAO {
 	Collection<Post> getPostsByOwner(int userId) throws Exception;
 
 	Collection<Post> getFreshPosts() throws Exception;
-
-	Collection<Post> getHotPost() throws Exception;
-
-	Collection<Post> getTrendingPost() throws Exception;
-
+	
 	void savePost(Post p) throws Exception;
 
 	void deletePost(Post p) throws Exception;

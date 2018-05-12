@@ -37,7 +37,7 @@ public class FileController {
 	
 	@Autowired 
     ServletContext application;
-	private static final String FILE_PATH = "C:\\Users\\User1\\Desktop\\uploads\\";
+	private static final String FILE_PATH = "C:\\Users\\HP\\Desktop\\uploads\\";
 
 	@RequestMapping(value="/upload/post", method=RequestMethod.POST)
 	public String saveImage(Model m, HttpSession session, @RequestParam("file") MultipartFile uploadedFile,
@@ -63,7 +63,7 @@ public class FileController {
 		try {
 		TagDAO.TAG_DAO.saveTag(g);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		p.title(description);
@@ -78,7 +78,7 @@ public class FileController {
 		try {
 			PostDAO.POST_DAO.savePost(p);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return "index";
@@ -92,7 +92,7 @@ public class FileController {
 			File serverFile = new File(FILE_PATH + fileName);
 			Files.copy(serverFile.toPath(), resp.getOutputStream());	
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

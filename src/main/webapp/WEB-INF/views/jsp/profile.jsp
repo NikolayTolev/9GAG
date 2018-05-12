@@ -21,12 +21,13 @@
 			<div class="col-sm-8 text-left"> 
 				<div class="flex-row">
 					<div class="flex-1"></div>
-				   <img src="img/${sessionScope.user.photo}" style="width: 100px; height: 100px; margin: 20px; border-radius: 50%"/>
-				   
-					<div><h2>${sessionScope.user.username}</h2></div>
+					<div align="center" style="padding-top: 5%; padding-right: 22%;">
+						   <img src="img/${sessionScope.user.photo}" style="width: 150px; height: 150px; margin: 20px; border-radius: 50%"/>
+							<div><h2><b>${sessionScope.user.username}</b></h2></div>
 					<div class="flex-1"></div>
+					</div>
 				</div>
-		
+					
 	<div id="flip-tabs">
 		<ul id="flip-navigation">
 			<li class="profile-tab selected" onclick="selectPosts()" id="postsBtn">
@@ -39,14 +40,13 @@
 				<a id="tab-2" onclick="selectCommented()" class="profile-tab">Commented</a>
 			</li>
 		</ul>
-
+		<hr style=" display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left; margin-right; border-style: inset; border-width: 1px;">
 		<div id="flip-container" style="align-content: center;">
 			<div id="postsTab">
 				<c:forEach var="post" items="${sessionScope.posts}">
 						<tr class="post-content">
 							<div class="tp post-content">
-								<h2 onclick="openModel(${post.id})">${post.title}
-									${post.id}</h2>
+								<h2 onclick="openModel(${post.id})">${post.title}</h2>
 							</div>
 							<c:choose>
 								<c:when test="${post.video == true}">

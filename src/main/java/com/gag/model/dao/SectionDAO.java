@@ -23,12 +23,6 @@ public enum SectionDAO implements ISectionDAO {
 	}
 
 	@Override
-	public Section getSectionById(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Section getSectionByName(String name) throws SQLException {
 		String sql = "SELECT id, name FROM sections WHERE name=?";
 		PreparedStatement ps = con.prepareStatement(sql);

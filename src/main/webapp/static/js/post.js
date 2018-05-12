@@ -67,7 +67,7 @@ function openModel(postId){
         for(var i=0;i<post.comments.length;i++){
             modelComments.innerHTML+='<div>'
                              +'<div onclick="openProfile('+post.comments[i].owner.id+')">'+post.comments[i].owner.username+'</div>'                 
-                    		 +'<button onclick="deleteComment('+post.comments[i].id+')" value="delete"></button>'
+//                    		 +'<button onclick="deleteComment('+post.comments[i].id+')" value="delete"></button>'
                              +'<div>'+post.comments[i].content+'</div>'
                              +'<button class="L mainButton" width="2%"  onclick="upvoteComment('+post.comments[i].id+')">'
                              +'<span class="glyphicon glyphicon-thumbs-up"></span> </button>'
@@ -79,7 +79,7 @@ function openModel(postId){
         }
         modelComments.innerHTML+='<form method="post" action="add/comment">'
                             +'<input type="hidden" name="postId" value="'+postId+'">'
-                            +'<textarea name="content" cols="30" rows="10"></textarea>'
+                            +'<textarea name="content" cols="41" rows="5" style="resize: none;"></textarea>'
                             +'<input type="submit" value="add comment" onclick="addComment(this)">'
                             +'</form>';
                               
@@ -114,16 +114,7 @@ function addComment(e){
     var request = new XMLHttpRequest();
     request.onreadystatechange = function(){
     	if (request.readyState == 4 && request.status == 200){
-        //    var c=JSON.parse(request.responseText);
-        //    var modelComments=document.getElementsByClassName("model-comments")[0];
-        //    modelComments.innerHTML+='<div>'
-        //                 +'<div onclick="openProfile('+c.owner.id+')">'+c.owner.username+'</div>'
-        //                 +'<div>'+c.content+'</div>'
-        //                 +'<button class="L mainButton" width="2%"  onclick="upvoteComment('+c.id+')">'
-        //                 +'<span class="glyphicon glyphicon-thumbs-up"></span> </button>'
-        //                 +'<button class="D mainButton" onclick="downvoteComment('+c.id+')">'
-        //                 +'<span class="glyphicon glyphicon-thumbs-down"></span> </button>';
-        //                 +'</div>';		 
+    		window.location.href="/";
     	 } 	 
    }      
     request.open(form.method, form.action);
